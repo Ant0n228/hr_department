@@ -1,15 +1,14 @@
 package com.anton.hr_department.dto;
 
-import lombok.Getter;
+import lombok.Data;
 import lombok.NoArgsConstructor;
-import lombok.Setter;
 import lombok.experimental.Accessors;
 
-@Getter
-@Setter
+@Data
 @NoArgsConstructor
 @Accessors(chain = true)
 public class DepartmentDTO {
+    private long idDepartment;
     private String departmentName;
     private int numberOfPeople;
 }

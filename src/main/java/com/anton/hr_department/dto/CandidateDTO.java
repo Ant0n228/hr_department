@@ -1,21 +1,21 @@
 package com.anton.hr_department.dto;
 
-import lombok.Getter;
+
+import lombok.Data;
 import lombok.NoArgsConstructor;
-import lombok.Setter;
 import lombok.experimental.Accessors;
 
-@Getter
-@Setter
+@Data
 @NoArgsConstructor
 @Accessors(chain = true)
 public class CandidateDTO {
+    private long idCandidate;
     private String fio;
     private String contactDetails;
     private String dateOfSubmission;
     private boolean applicationStatus;
     private boolean foreignLanguage;
-    private int idVacancy;
-    private int idEmployee;
-    private int idEducation;
+    private long idVacancy;
+    private long idEmployee;
+    private long idEducation;
 }
