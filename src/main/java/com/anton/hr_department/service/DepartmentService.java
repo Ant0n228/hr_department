@@ -10,6 +10,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class DepartmentService {
@@ -30,5 +31,20 @@ public class DepartmentService {
         });
 
         return departmentDTOS;
+    }
+
+    public DepartmentDTO getDepartment(long idDepartment) {
+        Optional<DepartmentModel> departmentModel = departmentModelRepository.findById(idDepartment);
+        return DepartmentDTOMapper.mapToDTO(departmentModel.get());
+    }
+
+    public void updateDepartment(DepartmentDTO departmentDTO) {
+        DepartmentModel departmentModel = DepartmentModelMapper.mapToModel(departmentDTO);
+        departmentModelRepository.save(departmentModel);
+    }
+
+    public void deleteDepartment(long idDepartment) {
+        Optional<DepartmentModel> departmentModel = departmentModelRepository.findById(idDepartment);
+        departmentModelRepository.delete(departmentModel.get());
     }
 }

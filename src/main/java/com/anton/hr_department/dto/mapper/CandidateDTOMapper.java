@@ -8,7 +8,7 @@ public class CandidateDTOMapper {
         return new CandidateDTO()
                 .setIdCandidate(model.getIdCandidate())
                 .setFio(model.getFio())
-                .setContactDetails(model.getContactDetails())
+                .setEmail(model.getEmail())
                 .setDateOfSubmission(model.getDateOfSubmission())
                 .setApplicationStatus(model.isApplicationStatus())
                 .setForeignLanguage(model.isForeignLanguage())

@@ -20,7 +20,21 @@ public class VacancyController {
 
     @GetMapping("/view")
     public List<VacancyDTO> getVacancy() {
-        List<VacancyDTO> vacancyDTOS = vacancyService.getAllVacancy();
-        return vacancyDTOS;
+        return vacancyService.getAllVacancy();
+    }
+
+    @GetMapping("/view/{id}")
+    public VacancyDTO getVacancy(@PathVariable long id) {
+        return vacancyService.getVacancy(id);
+    }
+
+    @PutMapping("/update")
+    public void updateVacancy(@RequestBody VacancyDTO vacancyDTO) {
+        vacancyService.updateVacancy(vacancyDTO);
+    }
+
+    @DeleteMapping("delete/{id}")
+    public void deleteVacancy(@PathVariable long id) {
+        vacancyService.deleteVacancy(id);
     }
 }

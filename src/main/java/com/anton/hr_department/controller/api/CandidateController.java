@@ -20,8 +20,22 @@ public class CandidateController {
 
     @GetMapping("/view")
     public List<CandidateDTO> getCandidate() {
-        List<CandidateDTO> candidateDTOS = candidateService.getAllCandidate();
-        return candidateDTOS;
+        return candidateService.getAllCandidate();
+    }
+
+    @GetMapping("/view/{id}")
+    public CandidateDTO getCandidate(@PathVariable long id) {
+        return candidateService.getCandidate(id);
+    }
+
+    @PutMapping("/update")
+    public void updateCandidate(@RequestBody CandidateDTO candidateDTO) {
+        candidateService.updateCandidate(candidateDTO);
+    }
+
+    @DeleteMapping("/delete/{id}")
+    public void deleteCandidate(@PathVariable long id) {
+        candidateService.deleteCandidate(id);
     }
 
 }
