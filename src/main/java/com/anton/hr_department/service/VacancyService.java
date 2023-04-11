@@ -11,6 +11,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class VacancyService {
@@ -26,10 +27,23 @@ public class VacancyService {
         Iterable<VacancyModel> vacancies = vacancyModelRepository.findAll();
         List<VacancyDTO> vacancyDTOS = new ArrayList<>();
 
-        vacancies.forEach(vacancy -> {
-            vacancyDTOS.add(VacancyDTOMapper.mapToDTO(vacancy));
-        });
+        vacancies.forEach(vacancy -> vacancyDTOS.add(VacancyDTOMapper.mapToDTO(vacancy)));
 
         return vacancyDTOS;
+    }
+
+    public VacancyDTO getVacancy(long idVacancy) {
+        Optional<VacancyModel> vacancyModel = vacancyModelRepository.findById(idVacancy);
+        return VacancyDTOMapper.mapToDTO(vacancyModel.get());
+    }
+
+    public void updateVacancy(VacancyDTO vacancyDTO) {
+        VacancyModel vacancyModel = VacancyModelMapper.mapToModel(vacancyDTO);
+        vacancyModelRepository.save(vacancyModel);
+    }
+
+    public void deleteVacancy(long idVacancy) {
+        Optional<VacancyModel> vacancyModel = vacancyModelRepository.findById(idVacancy);
+        vacancyModelRepository.delete(vacancyModel.get());
     }
 }

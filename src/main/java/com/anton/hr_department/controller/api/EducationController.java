@@ -20,7 +20,20 @@ public class EducationController {
 
     @GetMapping("/view")
     public List<EducationDTO> getEducation() {
-        List<EducationDTO> educationDTOS = educationService.getAllEducation();
-        return educationDTOS;
+        return educationService.getAllEducation();
+    }
+
+    @GetMapping("/view/{id}")
+    public EducationDTO getEducation(@PathVariable long id) {
+        return educationService.getEducation(id);
+    }
+    @PutMapping("/update")
+    public void updateEducation(@RequestBody EducationDTO educationDTO) {
+        educationService.updateEducation(educationDTO);
+    }
+
+    @DeleteMapping("delete/{id}")
+    public void deleteEducation(@PathVariable long id) {
+        educationService.deleteEducation(id);
     }
 }

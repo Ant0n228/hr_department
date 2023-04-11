@@ -3,7 +3,6 @@ package com.anton.hr_department.model;
 
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
-import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import lombok.experimental.Accessors;
@@ -11,7 +10,6 @@ import lombok.experimental.Accessors;
 @Entity
 @Table(name = "candidate")
 @Data
-@Builder
 @NoArgsConstructor
 @AllArgsConstructor
 @Accessors(chain = true)
@@ -23,8 +21,8 @@ public class CandidateModel {
     @Column(name = "fio")
     private String fio;
 
-    @Column(name = "contact_details")
-    private String contactDetails;
+    @Column(name = "email")
+    private String email;
 
     @Column(name = "date_of_submission")
     private String dateOfSubmission;

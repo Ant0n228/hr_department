@@ -11,7 +11,7 @@ import lombok.experimental.Accessors;
 public class CandidateDTO {
     private long idCandidate;
     private String fio;
-    private String contactDetails;
+    private String email;
     private String dateOfSubmission;
     private boolean applicationStatus;
     private boolean foreignLanguage;

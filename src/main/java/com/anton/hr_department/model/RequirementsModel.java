@@ -2,7 +2,6 @@ package com.anton.hr_department.model;
 
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
-import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import lombok.experimental.Accessors;
@@ -10,7 +9,6 @@ import lombok.experimental.Accessors;
 @Entity
 @Table(name = "requirements_for_candidates")
 @Data
-@Builder
 @NoArgsConstructor
 @AllArgsConstructor
 @Accessors(chain = true)

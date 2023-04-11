@@ -20,7 +20,20 @@ public class RequirementController {
 
     @GetMapping("/view")
     public List<RequirementsDTO> getRequirement() {
-        List<RequirementsDTO> requirementsDTOS = requirementsService.getAllRequirements();
-        return requirementsDTOS;
+        return requirementsService.getAllRequirements();
+    }
+    @GetMapping("/view/{id}")
+    public RequirementsDTO getRequirements(@PathVariable long id) {
+        return requirementsService.getRequirements(id);
+    }
+
+    @PutMapping("/update")
+    public void updateRequirements(@RequestBody RequirementsDTO requirementsDTO) {
+        requirementsService.updateRequirements(requirementsDTO);
+    }
+
+    @DeleteMapping("delete/{id}")
+    public void deleteRequirements(@PathVariable long id) {
+        requirementsService.deleteRequirements(id);
     }
 }

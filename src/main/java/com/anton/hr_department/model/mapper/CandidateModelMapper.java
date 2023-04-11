@@ -8,7 +8,7 @@ public class CandidateModelMapper{
         return new CandidateModel()
                 .setIdCandidate(dto.getIdCandidate())
                 .setFio(dto.getFio())
-                .setContactDetails(dto.getContactDetails())
+                .setEmail(dto.getEmail())
                 .setDateOfSubmission(dto.getDateOfSubmission())
                 .setApplicationStatus(dto.isApplicationStatus())
                 .setForeignLanguage(dto.isForeignLanguage())

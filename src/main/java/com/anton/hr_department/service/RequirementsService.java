@@ -10,6 +10,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class RequirementsService {
@@ -29,5 +30,20 @@ public class RequirementsService {
         });
 
         return requirementsDTOS;
+    }
+
+    public RequirementsDTO getRequirements(long idRequirements) {
+        Optional<RequirementsModel> requirementsModel = requirementsModelRepository.findById(idRequirements);
+        return RequirementsDTOMapper.mapToDTO(requirementsModel.get());
+    }
+
+    public void updateRequirements(RequirementsDTO requirementsDTO) {
+        RequirementsModel requirementsModel = RequirementsModelMapper.mapToModel(requirementsDTO);
+        requirementsModelRepository.save(requirementsModel);
+    }
+
+    public void deleteRequirements(long idRequirements) {
+        Optional<RequirementsModel> requirementsModel = requirementsModelRepository.findById(idRequirements);
+        requirementsModelRepository.delete(requirementsModel.get());
     }
 }

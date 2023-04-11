@@ -10,6 +10,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class EducationService {
@@ -30,5 +31,18 @@ public class EducationService {
         });
 
         return educationDTOS;
+    }
+    public EducationDTO getEducation(long idEducation) {
+        Optional<EducationModel> educationModel = educationModelRepository.findById(idEducation);
+        return EducationDTOMapper.mapToDTO(educationModel.get());
+    }
+    public void updateEducation(EducationDTO educationDTO) {
+        EducationModel educationModel = EducationModelMapper.mapToModel(educationDTO);
+        educationModelRepository.save(educationModel);
+    }
+
+    public void deleteEducation(long idEducation) {
+        Optional<EducationModel> educationModel = educationModelRepository.findById(idEducation);
+        educationModelRepository.delete(educationModel.get());
     }
 }

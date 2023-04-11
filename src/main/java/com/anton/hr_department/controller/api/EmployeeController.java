@@ -20,7 +20,20 @@ public class EmployeeController {
 
     @GetMapping("/view")
     public List<EmployeeDTO> getEmployee() {
-        List<EmployeeDTO> employeeDTOS = employeeService.getAllEmployee();
-        return employeeDTOS;
+        return employeeService.getAllEmployee();
+    }
+    @GetMapping("/view/{id}")
+    public EmployeeDTO getEmployee(@PathVariable long id) {
+        return employeeService.getEmployee(id);
+    }
+
+    @PutMapping("/update")
+    public void updateEmployee(@RequestBody EmployeeDTO employeeDTO) {
+        employeeService.updateEmployee(employeeDTO);
+    }
+
+    @DeleteMapping("delete/{id}")
+    public void deleteEmployee(@PathVariable long id) {
+        employeeService.deleteEmployee(id);
     }
 }
