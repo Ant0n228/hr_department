@@ -15,14 +15,9 @@ import lombok.experimental.Accessors;
 public class RequirementsModel {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private long idRequirements;
+    private Long idRequirements;
 
-    @Column(name = "programming_language")
-    private String programmingLanguage;
+    private String requirements;
 
-    @Column(name = "framework")
-    private String framework;
-
-    @Column(name = "additional_skill")
-    private String additionalSkill;
+    private String jobDescription;
 }

@@ -14,9 +14,11 @@ import java.util.Optional;
 
 @Service
 public class DepartmentService {
-    @Autowired
     DepartmentModelRepository departmentModelRepository;
-
+    @Autowired
+    public DepartmentService(DepartmentModelRepository departmentModelRepository) {
+        this.departmentModelRepository = departmentModelRepository;
+    }
     public void saveDepartment(DepartmentDTO departmentDTO) {
         DepartmentModel departmentModel = DepartmentModelMapper.mapToModel(departmentDTO);
         departmentModelRepository.save(departmentModel);

@@ -14,9 +14,12 @@ import java.util.Optional;
 
 @Service
 public class EducationService {
-    @Autowired
     EducationModelRepository educationModelRepository;
 
+    @Autowired
+    public EducationService(EducationModelRepository educationModelRepository) {
+        this.educationModelRepository = educationModelRepository;
+    }
     public void saveEducation(EducationDTO educationDTO) {
         EducationModel educationModel = EducationModelMapper.mapToModel(educationDTO);
         educationModelRepository.save(educationModel);

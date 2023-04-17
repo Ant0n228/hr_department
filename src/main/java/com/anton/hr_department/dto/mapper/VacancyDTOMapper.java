@@ -10,6 +10,7 @@ public class VacancyDTOMapper {
                 .setJobTitle(model.getJobTitle())
                 .setDateOfPublication(model.getDateOfPublication())
                 .setSalary(model.getSalary())
-                .setIdRequirements(model.getIdRequirements());
+                .setIdRequirements(model.getIdRequirements())
+                .setNumberOfVacancy(model.getNumberOfVacancy());
     }
 }

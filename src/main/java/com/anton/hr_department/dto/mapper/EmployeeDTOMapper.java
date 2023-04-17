@@ -12,7 +12,7 @@ public class EmployeeDTOMapper {
                 .setPosition(model.getPosition())
                 .setSalary(model.getSalary())
                 .setDateOfDismissal(model.getDateOfDismissal())
-                .setContactDetails(model.getContactDetails())
+                .setEmail(model.getEmail())
                 .setDateOfEmployment(model.getDateOfEmployment())
                 .setIdEducation(model.getIdEducation())
                 .setIdDepartment(model.getIdDepartment());

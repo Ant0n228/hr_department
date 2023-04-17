@@ -6,6 +6,8 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 import lombok.experimental.Accessors;
 
+import java.sql.Date;
+
 @Entity
 @Table(name = "education")
 @Data
@@ -15,20 +17,15 @@ import lombok.experimental.Accessors;
 public class EducationModel {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private long idEducation;
+    private Long idEducation;
 
-    @Column(name = "educational_institution")
     private String educationalInstitution;
 
-    @Column(name = "faculty")
     private String faculty;
 
-    @Column(name = "specialization")
     private String specialization;
 
-    @Column(name = "date_of_admission")
-    private String dateOfAdmission;
+    private Date dateOfAdmission;
 
-    @Column(name = "date_of_graduation")
-    private String dateOfGraduation;
+    private Date dateOfGraduation;
 }

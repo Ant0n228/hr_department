@@ -8,7 +8,7 @@ import lombok.experimental.Accessors;
 @NoArgsConstructor
 @Accessors(chain = true)
 public class DepartmentDTO {
-    private long idDepartment;
+    private Long idDepartment;
     private String departmentName;
     private int numberOfPeople;
 }

@@ -11,7 +11,7 @@ public class CandidateDTOMapper {
                 .setEmail(model.getEmail())
                 .setDateOfSubmission(model.getDateOfSubmission())
                 .setApplicationStatus(model.isApplicationStatus())
-                .setForeignLanguage(model.isForeignLanguage())
+                .setForeignLanguage(model.getForeignLanguage())
                 .setIdVacancy(model.getIdVacancy())
                 .setIdEmployee(model.getIdEmployee())
                 .setIdEducation(model.getIdEducation());

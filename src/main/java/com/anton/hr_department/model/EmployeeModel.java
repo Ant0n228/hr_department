@@ -5,6 +5,9 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import lombok.experimental.Accessors;
+
+import java.sql.Date;
+
 @Entity
 @Table(name = "employee")
 @Data
@@ -14,29 +17,23 @@ import lombok.experimental.Accessors;
 public class EmployeeModel {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private long idEmployee;
+    private Long idEmployee;
 
-    @Column(name = "fio")
     private String fio;
 
-    @Column(name = "position")
     private String position;
 
-    @Column(name = "salary")
     private double salary;
 
-    @Column(name = "date_of_employment")
-    private String dateOfEmployment;
+    private Date dateOfEmployment;
 
-    @Column(name = "contact_details")
-    private String contactDetails;
+    private String email;
 
-    @Column(name = "date_of_dismissal")
-    private String dateOfDismissal;
+    private Date dateOfDismissal;
 
-    @Column(name = "id_education")
-    private long idEducation;
+    @Column(nullable = false)
+    private Long idEducation;
 
-    @Column(name = "id_department")
-    private long idDepartment;
+    @Column(nullable = false)
+    private Long idDepartment;
 }
