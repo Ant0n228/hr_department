@@ -10,9 +10,12 @@ import java.util.List;
 @RestController
 @RequestMapping("/vacancy")
 public class VacancyController {
-    @Autowired
     VacancyService vacancyService;
 
+    @Autowired
+    public VacancyController(VacancyService vacancyService) {
+        this.vacancyService = vacancyService;
+    }
     @PostMapping("/create")
     public void createVacancy(@RequestBody VacancyDTO vacancyDTO) {
         vacancyService.saveVacancy(vacancyDTO);

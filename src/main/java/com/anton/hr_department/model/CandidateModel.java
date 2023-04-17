@@ -7,6 +7,8 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 import lombok.experimental.Accessors;
 
+import java.sql.Date;
+
 @Entity
 @Table(name = "candidate")
 @Data
@@ -25,7 +27,7 @@ public class CandidateModel {
     private String email;
 
     @Column(name = "date_of_submission")
-    private String dateOfSubmission;
+    private Date dateOfSubmission;
 
     @Column(name = "application_status")
     private boolean applicationStatus;

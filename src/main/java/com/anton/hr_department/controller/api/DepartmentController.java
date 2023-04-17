@@ -10,9 +10,12 @@ import java.util.List;
 @RestController
 @RequestMapping("/department")
 public class DepartmentController {
-    @Autowired
     DepartmentService departmentService;
 
+    @Autowired
+    public DepartmentController(DepartmentService departmentService) {
+        this.departmentService = departmentService;
+    }
     @PostMapping("/create")
     public void createDepartment(@RequestBody DepartmentDTO departmentDTO) {
         departmentService.saveDepartment(departmentDTO);

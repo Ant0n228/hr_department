@@ -6,6 +6,8 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 import lombok.experimental.Accessors;
 
+import java.sql.Date;
+
 @Entity
 @Table(name = "vacancy")
 @Data
@@ -21,7 +23,7 @@ public class VacancyModel {
     private String jobTitle;
 
     @Column(name = "date_of_publication")
-    private String dateOfPublication;
+    private Date dateOfPublication;
 
     @Column(name = "salary")
     private double salary;

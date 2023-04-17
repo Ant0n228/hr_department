@@ -10,8 +10,12 @@ import java.util.List;
 @RestController
 @RequestMapping("/candidate")
 public class CandidateController {
-    @Autowired
     CandidateService candidateService;
+
+    @Autowired
+    public CandidateController(CandidateService candidateService) {
+        this.candidateService = candidateService;
+    }
 
     @PostMapping("/create")
     public void createCandidate(@RequestBody CandidateDTO candidateDTO) {

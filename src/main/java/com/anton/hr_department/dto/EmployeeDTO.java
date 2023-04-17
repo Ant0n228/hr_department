@@ -4,6 +4,8 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 import lombok.experimental.Accessors;
 
+import java.sql.Date;
+
 @Data
 @NoArgsConstructor
 @Accessors(chain = true)
@@ -12,9 +14,9 @@ public class EmployeeDTO {
     private String fio;
     private String position;
     private double salary;
-    private String dateOfEmployment;
+    private Date dateOfEmployment;
     private String contactDetails;
-    private String dateOfDismissal;
+    private Date dateOfDismissal;
     private long idEducation;
     private long idDepartment;
 }

@@ -10,8 +10,13 @@ import java.util.List;
 @RestController
 @RequestMapping("/requirement")
 public class RequirementController {
-    @Autowired
     RequirementsService requirementsService;
+
+
+    @Autowired
+    public RequirementController(RequirementsService requirementsService) {
+        this.requirementsService = requirementsService;
+    }
 
     @PostMapping("/create")
     public void createRequirement(@RequestBody RequirementsDTO requirementsDTO) {

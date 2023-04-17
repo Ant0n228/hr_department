@@ -6,6 +6,8 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 import lombok.experimental.Accessors;
 
+import java.sql.Date;
+
 @Entity
 @Table(name = "education")
 @Data
@@ -27,8 +29,8 @@ public class EducationModel {
     private String specialization;
 
     @Column(name = "date_of_admission")
-    private String dateOfAdmission;
+    private Date dateOfAdmission;
 
     @Column(name = "date_of_graduation")
-    private String dateOfGraduation;
+    private Date dateOfGraduation;
 }

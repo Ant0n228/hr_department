@@ -10,9 +10,12 @@ import java.util.List;
 @RestController
 @RequestMapping("/education")
 public class EducationController {
-    @Autowired
     EducationService educationService;
 
+    @Autowired
+    public EducationController(EducationService educationService) {
+        this.educationService = educationService;
+    }
     @PostMapping("/create")
     public void createEducation(@RequestBody EducationDTO educationDTO) {
         educationService.saveEducation(educationDTO);
