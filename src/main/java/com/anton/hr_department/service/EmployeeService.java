@@ -14,8 +14,12 @@ import java.util.Optional;
 
 @Service
 public class EmployeeService {
-    @Autowired
     EmployeeModelRepository employeeModelRepository;
+
+    @Autowired
+    public EmployeeService(EmployeeModelRepository employeeModelRepository) {
+        this.employeeModelRepository = employeeModelRepository;
+    }
 
     public void saveEmployee(EmployeeDTO employeeDTO) {
         EmployeeModel employeeModel = EmployeeModelMapper.mapToModel(employeeDTO);

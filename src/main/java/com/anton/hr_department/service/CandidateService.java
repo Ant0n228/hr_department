@@ -14,8 +14,12 @@ import java.util.Optional;
 
 @Service
 public class CandidateService {
-    @Autowired
     CandidateModelRepository candidateModelRepository;
+
+    @Autowired
+    public CandidateService(CandidateModelRepository candidateModelRepository) {
+        this.candidateModelRepository = candidateModelRepository;
+    }
 
     public void saveCandidate(CandidateDTO candidateDTO) {
         CandidateModel candidateModel = CandidateModelMapper.mapToModel(candidateDTO);

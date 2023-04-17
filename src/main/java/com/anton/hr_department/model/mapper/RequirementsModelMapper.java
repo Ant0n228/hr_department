@@ -8,8 +8,7 @@ public class RequirementsModelMapper {
     public static RequirementsModel mapToModel(RequirementsDTO dto) {
         return new RequirementsModel()
                 .setIdRequirements(dto.getIdRequirements())
-                .setProgrammingLanguage(dto.getProgrammingLanguage())
-                .setFramework(dto.getFramework())
-                .setAdditionalSkill(dto.getAdditionalSkill());
+                .setRequirements(dto.getRequirements())
+                .setJobDescription(dto.getJobDescription());
     }
 }

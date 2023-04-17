@@ -11,7 +11,7 @@ public class EmployeeModelMapper {
                 .setPosition(dto.getPosition())
                 .setSalary(dto.getSalary())
                 .setDateOfDismissal(dto.getDateOfDismissal())
-                .setContactDetails(dto.getContactDetails())
+                .setEmail(dto.getEmail())
                 .setDateOfEmployment(dto.getDateOfEmployment())
                 .setIdEducation(dto.getIdEducation())
                 .setIdDepartment(dto.getIdDepartment());

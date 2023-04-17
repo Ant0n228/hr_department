@@ -16,11 +16,9 @@ import lombok.experimental.Accessors;
 public class DepartmentModel {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private long idDepartment;
+    private Long idDepartment;
 
-    @Column(name = "department_name")
     private String departmentName;
 
-    @Column(name = "number_of_people")
     private int numberOfPeople;
 }

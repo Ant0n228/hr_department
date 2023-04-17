@@ -14,8 +14,14 @@ import java.util.Optional;
 
 @Service
 public class RequirementsService {
-    @Autowired
+
     RequirementsModelRepository requirementsModelRepository;
+
+    @Autowired
+    public RequirementsService(RequirementsModelRepository requirementsModelRepository) {
+        this.requirementsModelRepository = requirementsModelRepository;
+    }
+
     public void saveRequirements(RequirementsDTO requirementsDTO) {
         RequirementsModel requirementsModel = RequirementsModelMapper.mapToModel(requirementsDTO);
         requirementsModelRepository.save(requirementsModel);

@@ -17,20 +17,15 @@ import java.sql.Date;
 public class EducationModel {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private long idEducation;
+    private Long idEducation;
 
-    @Column(name = "educational_institution")
     private String educationalInstitution;
 
-    @Column(name = "faculty")
     private String faculty;
 
-    @Column(name = "specialization")
     private String specialization;
 
-    @Column(name = "date_of_admission")
     private Date dateOfAdmission;
 
-    @Column(name = "date_of_graduation")
     private Date dateOfGraduation;
 }

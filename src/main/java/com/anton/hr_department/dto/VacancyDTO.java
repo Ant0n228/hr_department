@@ -10,9 +10,10 @@ import java.sql.Date;
 @NoArgsConstructor
 @Accessors(chain = true)
 public class VacancyDTO {
-    private long idVacancy;
+    private Long idVacancy;
     private String jobTitle;
     private Date dateOfPublication;
     private double salary;
-    private long idRequirements;
+    private Long idRequirements;
+    private int numberOfVacancy;
 }

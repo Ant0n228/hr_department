@@ -10,13 +10,13 @@ import java.sql.Date;
 @NoArgsConstructor
 @Accessors(chain = true)
 public class EmployeeDTO {
-    private long idEmployee;
+    private Long idEmployee;
     private String fio;
     private String position;
     private double salary;
     private Date dateOfEmployment;
-    private String contactDetails;
+    private String email;
     private Date dateOfDismissal;
-    private long idEducation;
-    private long idDepartment;
+    private Long idEducation;
+    private Long idDepartment;
 }

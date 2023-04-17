@@ -17,17 +17,16 @@ import java.sql.Date;
 public class VacancyModel {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private long idVacancy;
+    private Long idVacancy;
 
-    @Column(name = "job_title")
     private String jobTitle;
 
-    @Column(name = "date_of_publication")
     private Date dateOfPublication;
 
-    @Column(name = "salary")
     private double salary;
 
-    @Column(name = "id_requirements")
-    private long idRequirements;
+    @Column(nullable = false)
+    private Long idRequirements;
+
+    private int numberOfVacancy;
 }
