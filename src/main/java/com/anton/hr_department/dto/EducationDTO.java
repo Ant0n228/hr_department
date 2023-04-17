@@ -10,7 +10,7 @@ import java.sql.Date;
 @NoArgsConstructor
 @Accessors(chain = true)
 public class EducationDTO {
-    private long idEducation;
+    private Long idEducation;
     private String educationalInstitution;
     private String faculty;
     private String specialization;
