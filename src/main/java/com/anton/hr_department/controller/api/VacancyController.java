@@ -17,6 +17,7 @@ public class VacancyController {
     public VacancyController(VacancyService vacancyService) {
         this.vacancyService = vacancyService;
     }
+
     @PostMapping("/create")
     public void createVacancy(@RequestBody VacancyDTO vacancyDTO) {
         vacancyService.saveVacancy(vacancyDTO);

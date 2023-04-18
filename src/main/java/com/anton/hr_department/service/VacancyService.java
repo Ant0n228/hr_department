@@ -38,7 +38,7 @@ public class VacancyService {
     public void saveVacancyWithRequirement(VacancyWithRequirementsDTO vacancyWithRequirementsDTO) {
         RequirementsModel requirementsModel = VacancyWithRequirementsModelMapper.mapToRequirementModel(vacancyWithRequirementsDTO);
         requirementsModelRepository.save(requirementsModel);
-        VacancyModel vacancyModel = VacancyWithRequirementsModelMapper.mapToVacancyModel(vacancyWithRequirementsDTO);
+        VacancyModel vacancyModel = VacancyWithRequirementsModelMapper.mapToVacancyModel(requirementsModel.getIdRequirements(), vacancyWithRequirementsDTO);
         vacancyModelRepository.save(vacancyModel);
     }
 
