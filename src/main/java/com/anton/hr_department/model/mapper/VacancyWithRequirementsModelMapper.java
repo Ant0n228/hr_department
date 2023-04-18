@@ -8,18 +8,14 @@ import java.sql.Date;
 import java.time.LocalDate;
 
 public class VacancyWithRequirementsModelMapper {
-    //TODO idRequirements won't be a null
-    public static VacancyModel mapToVacancyModel(VacancyWithRequirementsDTO vacancyWithRequirementsDTO) {
-        RequirementsModel requirementsModel = mapToRequirementModel(vacancyWithRequirementsDTO);
-        Long idRequirement = requirementsModel.getIdRequirements();
+    public static VacancyModel mapToVacancyModel(long idRequirements, VacancyWithRequirementsDTO vacancyWithRequirementsDTO) {
         return new VacancyModel()
                 .setIdVacancy(vacancyWithRequirementsDTO.getIdVacancyWithRequirements())
                 .setJobTitle(vacancyWithRequirementsDTO.getJobTitle())
                 .setDateOfPublication(Date.valueOf(LocalDate.now()))
                 .setSalary(vacancyWithRequirementsDTO.getSalary())
                 .setNumberOfVacancy(vacancyWithRequirementsDTO.getNumberOfVacancy())
-                // TODO How does it work?
-                .setIdRequirements(idRequirement != null ? idRequirement : 1l);
+                .setIdRequirements(idRequirements);
     }
 
     public static RequirementsModel mapToRequirementModel(VacancyWithRequirementsDTO vacancyWithRequirementsDTO) {
