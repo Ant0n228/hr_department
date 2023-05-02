@@ -16,7 +16,6 @@ public class CandidateModelMapper{
                 .setApplicationStatus(false)
                 .setForeignLanguage(dto.getForeignLanguage())
                 .setIdVacancy(dto.getIdVacancy())
-                .setIdEmployee(dto.getIdEmployee())
                 .setIdEducation(dto.getIdEducation());
     }
 }

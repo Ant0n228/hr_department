@@ -18,6 +18,5 @@ public class CandidateDTO {
     private boolean applicationStatus;
     private String foreignLanguage;
     private Long idVacancy;
-    private Long idEmployee;
     private Long idEducation;
 }

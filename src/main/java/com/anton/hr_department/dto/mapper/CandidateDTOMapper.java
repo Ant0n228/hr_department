@@ -13,7 +13,6 @@ public class CandidateDTOMapper {
                 .setApplicationStatus(model.isApplicationStatus())
                 .setForeignLanguage(model.getForeignLanguage())
                 .setIdVacancy(model.getIdVacancy())
-                .setIdEmployee(model.getIdEmployee())
                 .setIdEducation(model.getIdEducation());
     }
 }

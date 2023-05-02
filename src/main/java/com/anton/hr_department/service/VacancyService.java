@@ -7,40 +7,24 @@ import com.anton.hr_department.dto.mapper.VacancyDTOMapper;
 import com.anton.hr_department.dto.mapper.VacancyWithRequirementsDTOMapper;
 import com.anton.hr_department.model.RequirementsModel;
 import com.anton.hr_department.model.VacancyModel;
-import com.anton.hr_department.model.mapper.VacancyModelMapper;
 import com.anton.hr_department.model.mapper.VacancyWithRequirementsModelMapper;
 import com.anton.hr_department.repository.RequirementsModelRepository;
 import com.anton.hr_department.repository.VacancyModelRepository;
-import org.springframework.beans.factory.annotation.Autowired;
+
+import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
+@Slf4j
 @Service
+@RequiredArgsConstructor
 public class VacancyService {
-    VacancyModelRepository vacancyModelRepository;
-    RequirementsModelRepository requirementsModelRepository;
-
-    @Autowired
-    public VacancyService(VacancyModelRepository vacancyModelRepository,
-                          RequirementsModelRepository requirementsModelRepository) {
-        this.vacancyModelRepository = vacancyModelRepository;
-        this.requirementsModelRepository = requirementsModelRepository;
-    }
-
-    public void saveVacancy(VacancyDTO vacancyDTO) {
-        VacancyModel vacancyModel = VacancyModelMapper.mapToModel(vacancyDTO);
-        vacancyModelRepository.save(vacancyModel);
-    }
-
-    public void saveVacancyWithRequirement(VacancyWithRequirementsDTO vacancyWithRequirementsDTO) {
-        RequirementsModel requirementsModel = VacancyWithRequirementsModelMapper.mapToRequirementModel(vacancyWithRequirementsDTO);
-        requirementsModelRepository.save(requirementsModel);
-        VacancyModel vacancyModel = VacancyWithRequirementsModelMapper.mapToVacancyModel(requirementsModel.getIdRequirements(), vacancyWithRequirementsDTO);
-        vacancyModelRepository.save(vacancyModel);
-    }
+    private final VacancyModelRepository vacancyModelRepository;
+    private final RequirementsModelRepository requirementsModelRepository;
 
     public List<VacancyDTO> getAllVacancy() {
         Iterable<VacancyModel> vacancies = vacancyModelRepository.findAll();
@@ -51,6 +35,29 @@ public class VacancyService {
         return vacancyDTOS;
     }
 
+    public void deleteVacancy(long idVacancy) {
+        Optional<VacancyModel> vacancyModel = vacancyModelRepository.findById(idVacancy);
+        vacancyModelRepository.delete(vacancyModel.get());
+        log.info("Deleting {}", vacancyModel);
+    }
+
+    public void saveVacancyWithRequirement(VacancyWithRequirementsDTO vacancyWithRequirementsDTO) {
+        RequirementsModel requirementsModel =
+                VacancyWithRequirementsModelMapper.mapToRequirementModel(vacancyWithRequirementsDTO);
+
+        // logging. we've just saved a new value
+        requirementsModelRepository.save(requirementsModel);
+        log.info("Saving new {}", requirementsModel);
+
+        VacancyModel vacancyModel =
+                VacancyWithRequirementsModelMapper.mapToVacancyModel(requirementsModel.getIdRequirements(),
+                        vacancyWithRequirementsDTO);
+
+        // logging. we've just saved a new value
+        vacancyModelRepository.save(vacancyModel);
+        log.info("Saving new {}", vacancyModel);
+    }
+
     public VacancyWithRequirementsDTO getVacancyWithRequirement(long idVacancy) {
         Optional<VacancyModel> vacancyModel = vacancyModelRepository.findById(idVacancy);
         Optional<RequirementsModel> requirementsModel = requirementsModelRepository.findById(vacancyModel.get().getIdRequirements());
@@ -58,20 +65,25 @@ public class VacancyService {
         return VacancyWithRequirementsDTOMapper.mapToDTO(vacancyModel.get(), requirementsModel.get());
     }
 
+    public void updateVacancyWithRequirement(VacancyWithRequirementsDTO vacancyWithRequirementsDTO) {
+        RequirementsModel requirementsModel =
+                VacancyWithRequirementsModelMapper.mapToRequirementModel(vacancyWithRequirementsDTO);
+        requirementsModelRepository.save(requirementsModel);
 
-    public VacancyDTO getVacancy(long idVacancy) {
-        Optional<VacancyModel> vacancyModel = vacancyModelRepository.findById(idVacancy);
-        return VacancyDTOMapper.mapToDTO(vacancyModel.get());
-    }
-
-
-    public void updateVacancy(VacancyDTO vacancyDTO) {
-        VacancyModel vacancyModel = VacancyModelMapper.mapToModel(vacancyDTO);
+        VacancyModel vacancyModel =
+                VacancyWithRequirementsModelMapper.mapToVacancyModel(requirementsModel.getIdRequirements(),
+                        vacancyWithRequirementsDTO);
         vacancyModelRepository.save(vacancyModel);
     }
 
-    public void deleteVacancy(long idVacancy) {
-        Optional<VacancyModel> vacancyModel = vacancyModelRepository.findById(idVacancy);
-        vacancyModelRepository.delete(vacancyModel.get());
+    public List<VacancyDTO> findVacancyByTitle(String title) {
+
+        Iterable<VacancyModel> vacancyModels = title != null ?
+                vacancyModelRepository.findVacancyModelsByJobTitle(title) :
+                vacancyModelRepository.findAll();
+
+        List<VacancyDTO> vacancyDTOS = new ArrayList<>();
+        vacancyModels.forEach(vacancy -> vacancyDTOS.add(VacancyDTOMapper.mapToDTO(vacancy)));
+        return vacancyDTOS;
     }
 }

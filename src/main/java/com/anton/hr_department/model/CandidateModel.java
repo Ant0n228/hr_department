@@ -18,24 +18,14 @@ import java.sql.Date;
 public class CandidateModel {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long  idCandidate;
-
+    private Long idCandidate;
     private String fio;
-
     private String email;
-
-    private Date dateOfSubmission;
-
-    private boolean applicationStatus;
-
     private String foreignLanguage;
-
+    private Date dateOfSubmission;
+    private boolean applicationStatus;
     @Column(nullable = false)
     private Long idVacancy;
-
-    @Column(nullable = false)
-    private Long idEmployee;
-
     @Column(nullable = false)
     private Long idEducation;
 }
