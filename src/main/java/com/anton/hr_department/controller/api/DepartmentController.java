@@ -1,39 +1,36 @@
 package com.anton.hr_department.controller.api;
 
-import com.anton.hr_department.dto.DepartmentDTO;
+import com.anton.hr_department.model.DepartmentModel;
 import com.anton.hr_department.service.DepartmentService;
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
 @RestController
 @RequestMapping("/department")
+@RequiredArgsConstructor
 public class DepartmentController {
-    DepartmentService departmentService;
+    private final DepartmentService departmentService;
 
-    @Autowired
-    public DepartmentController(DepartmentService departmentService) {
-        this.departmentService = departmentService;
-    }
     @PostMapping("/create")
-    public void createDepartment(@RequestBody DepartmentDTO departmentDTO) {
-        departmentService.saveDepartment(departmentDTO);
+    public void createDepartment(@RequestBody DepartmentModel departmentModel) {
+        departmentService.saveDepartment(departmentModel);
     }
 
     @GetMapping("/view")
-    public List<DepartmentDTO> getAllDepartment() {
+    public List<DepartmentModel> getAllDepartment() {
         return departmentService.getAllDepartment();
     }
 
     @GetMapping("/view/{id}")
-    public DepartmentDTO getDepartment(@PathVariable long id) {
+    public DepartmentModel getDepartment(@PathVariable long id) {
         return departmentService.getDepartment(id);
     }
 
     @PutMapping("/update")
-    public void updateDepartment(@RequestBody DepartmentDTO departmentDTO) {
-        departmentService.updateDepartment(departmentDTO);
+    public void updateDepartment(@RequestBody DepartmentModel departmentModel) {
+        departmentService.updateDepartment(departmentModel);
     }
 
     @DeleteMapping("delete/{id}")

@@ -18,14 +18,9 @@ public class EducationModel {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long idEducation;
-
     private String educationalInstitution;
-
     private String faculty;
-
     private String specialization;
-
     private Date dateOfAdmission;
-
     private Date dateOfGraduation;
 }

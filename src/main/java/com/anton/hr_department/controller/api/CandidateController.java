@@ -2,20 +2,16 @@ package com.anton.hr_department.controller.api;
 
 import com.anton.hr_department.dto.CandidateDTO;
 import com.anton.hr_department.service.CandidateService;
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
 @RestController
 @RequestMapping("/candidate")
+@RequiredArgsConstructor
 public class CandidateController {
-    CandidateService candidateService;
-
-    @Autowired
-    public CandidateController(CandidateService candidateService) {
-        this.candidateService = candidateService;
-    }
+    private final CandidateService candidateService;
 
     @PostMapping("/create")
     public void createCandidate(@RequestBody CandidateDTO candidateDTO) {

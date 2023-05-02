@@ -5,6 +5,8 @@ import com.anton.hr_department.dto.mapper.CandidateDTOMapper;
 import com.anton.hr_department.model.CandidateModel;
 import com.anton.hr_department.model.mapper.CandidateModelMapper;
 import com.anton.hr_department.repository.CandidateModelRepository;
+import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -13,17 +15,15 @@ import java.util.List;
 import java.util.Optional;
 
 @Service
+@RequiredArgsConstructor
+@Slf4j
 public class CandidateService {
-    CandidateModelRepository candidateModelRepository;
-
-    @Autowired
-    public CandidateService(CandidateModelRepository candidateModelRepository) {
-        this.candidateModelRepository = candidateModelRepository;
-    }
+    private final CandidateModelRepository candidateModelRepository;
 
     public void saveCandidate(CandidateDTO candidateDTO) {
         CandidateModel candidateModel = CandidateModelMapper.mapToModel(candidateDTO);
         candidateModelRepository.save(candidateModel);
+        log.info("Saving {} ", candidateModel);
     }
 
     public List<CandidateDTO> getAllCandidate() {
@@ -33,7 +33,6 @@ public class CandidateService {
         candidates.forEach(candidate -> {
             candidateDTOS.add(CandidateDTOMapper.mapToDTO(candidate));
         });
-
         return candidateDTOS;
     }
 
@@ -51,5 +50,6 @@ public class CandidateService {
     public void deleteCandidate(long idCandidate) {
         Optional<CandidateModel> candidateModel = candidateModelRepository.findById(idCandidate);
         candidateModelRepository.delete(candidateModel.get());
+        log.info("Deleting {} ", candidateModel);
     }
 }

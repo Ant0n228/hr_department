@@ -17,8 +17,6 @@ public class DepartmentModel {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long idDepartment;
-
     private String departmentName;
-
     private int numberOfPeople;
 }

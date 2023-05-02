@@ -1,52 +1,41 @@
 package com.anton.hr_department.service;
 
-import com.anton.hr_department.dto.DepartmentDTO;
-import com.anton.hr_department.dto.mapper.DepartmentDTOMapper;
 import com.anton.hr_department.model.DepartmentModel;
-import com.anton.hr_department.model.mapper.DepartmentModelMapper;
 import com.anton.hr_department.repository.DepartmentModelRepository;
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
 @Service
+@RequiredArgsConstructor
+@Slf4j
 public class DepartmentService {
-    DepartmentModelRepository departmentModelRepository;
-    @Autowired
-    public DepartmentService(DepartmentModelRepository departmentModelRepository) {
-        this.departmentModelRepository = departmentModelRepository;
-    }
-    public void saveDepartment(DepartmentDTO departmentDTO) {
-        DepartmentModel departmentModel = DepartmentModelMapper.mapToModel(departmentDTO);
+    private final DepartmentModelRepository departmentModelRepository;
+
+    public void saveDepartment(DepartmentModel departmentModel) {
         departmentModelRepository.save(departmentModel);
+        log.info("Saving {} ", departmentModel);
     }
 
-    public List<DepartmentDTO> getAllDepartment() {
-        Iterable<DepartmentModel> departments = departmentModelRepository.findAll();
-        List<DepartmentDTO> departmentDTOS = new ArrayList<>();
-
-        departments.forEach(department -> {
-            departmentDTOS.add(DepartmentDTOMapper.mapToDTO(department));
-        });
-
-        return departmentDTOS;
+    public List<DepartmentModel> getAllDepartment() {
+        return (List<DepartmentModel>) departmentModelRepository.findAll();
     }
 
-    public DepartmentDTO getDepartment(long idDepartment) {
+    public DepartmentModel getDepartment(long idDepartment) {
         Optional<DepartmentModel> departmentModel = departmentModelRepository.findById(idDepartment);
-        return DepartmentDTOMapper.mapToDTO(departmentModel.get());
+        return departmentModel.get();
     }
 
-    public void updateDepartment(DepartmentDTO departmentDTO) {
-        DepartmentModel departmentModel = DepartmentModelMapper.mapToModel(departmentDTO);
+    public void updateDepartment(DepartmentModel departmentModel) {
         departmentModelRepository.save(departmentModel);
     }
 
     public void deleteDepartment(long idDepartment) {
         Optional<DepartmentModel> departmentModel = departmentModelRepository.findById(idDepartment);
         departmentModelRepository.delete(departmentModel.get());
+        log.info("Deleting {} ", departmentModel);
     }
 }
