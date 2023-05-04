@@ -29,9 +29,7 @@ public class EmployeeService {
         Iterable<EmployeeModel> employees = employeeModelRepository.findAll();
         List<EmployeeDTO> employeeDTOS = new ArrayList<>();
 
-        employees.forEach(employee -> {
-            employeeDTOS.add(EmployeeDTOMapper.mapToDTO(employee));
-        });
+        employees.forEach(employee -> employeeDTOS.add(EmployeeDTOMapper.mapToDTO(employee)));
 
         return employeeDTOS;
     }
