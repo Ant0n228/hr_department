@@ -13,7 +13,7 @@ public class CandidateModelMapper{
                 .setFio(dto.getFio())
                 .setEmail(dto.getEmail())
                 .setDateOfSubmission(Date.valueOf(LocalDate.now()))
-                .setApplicationStatus(false)
+                .setApplicationStatus(dto.isApplicationStatus())
                 .setForeignLanguage(dto.getForeignLanguage())
                 .setIdVacancy(dto.getIdVacancy())
                 .setIdEducation(dto.getIdEducation());

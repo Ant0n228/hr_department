@@ -21,7 +21,7 @@ public class DepartmentService {
     }
 
     public List<DepartmentModel> getAllDepartment() {
-        return (List<DepartmentModel>) departmentModelRepository.findAll();
+        return departmentModelRepository.findAll();
     }
 
     public DepartmentModel getDepartment(long idDepartment) {
@@ -37,5 +37,11 @@ public class DepartmentService {
         Optional<DepartmentModel> departmentModel = departmentModelRepository.findById(idDepartment);
         departmentModelRepository.delete(departmentModel.get());
         log.info("Deleting {} ", departmentModel);
+    }
+
+    public List<DepartmentModel> findDepartmentByDepartmentName(String departmentName) {
+        return departmentName != null ?
+                departmentModelRepository.findDepartmentModelByDepartmentName(departmentName) :
+                departmentModelRepository.findAll();
     }
 }

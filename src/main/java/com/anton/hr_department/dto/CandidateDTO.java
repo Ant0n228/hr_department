@@ -15,7 +15,7 @@ public class CandidateDTO {
     private String fio;
     private String email;
     private Date dateOfSubmission;
-    private boolean applicationStatus;
+    private boolean applicationStatus = false;
     private String foreignLanguage;
     private Long idVacancy;
     private Long idEducation;

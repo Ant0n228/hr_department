@@ -31,5 +31,4 @@ public class EmployeeModel {
     private Long idDepartment;
     @Column(nullable = false)
     private Long idVacancy;
-
 }

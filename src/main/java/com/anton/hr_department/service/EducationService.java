@@ -21,7 +21,7 @@ public class EducationService {
     }
 
     public List<EducationModel> getAllEducation() {
-        return (List<EducationModel>) educationModelRepository.findAll();
+        return educationModelRepository.findAll();
     }
 
     public EducationModel getEducation(long idEducation) {
@@ -32,10 +32,16 @@ public class EducationService {
         educationModelRepository.save(educationModel);
     }
 
-    // TODO learn more about Optional<T>
     public void deleteEducation(long idEducation) {
         Optional<EducationModel> educationModel = educationModelRepository.findById(idEducation);
         educationModelRepository.delete(educationModel.get());
         log.info("Deleting {} ", educationModel);
+    }
+
+    public List<EducationModel> findEducationBySpecialization(String specialization) {
+        log.info("Search {}", specialization);
+        return specialization != null ?
+                educationModelRepository.findEducationModelBySpecialization(specialization) :
+                educationModelRepository.findAll();
     }
 }

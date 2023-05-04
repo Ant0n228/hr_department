@@ -7,7 +7,6 @@ import com.anton.hr_department.model.mapper.CandidateModelMapper;
 import com.anton.hr_department.repository.CandidateModelRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -30,9 +29,7 @@ public class CandidateService {
         Iterable<CandidateModel> candidates = candidateModelRepository.findAll();
         List<CandidateDTO> candidateDTOS = new ArrayList<>();
 
-        candidates.forEach(candidate -> {
-            candidateDTOS.add(CandidateDTOMapper.mapToDTO(candidate));
-        });
+        candidates.forEach(candidate -> candidateDTOS.add(CandidateDTOMapper.mapToDTO(candidate)));
         return candidateDTOS;
     }
 
@@ -51,5 +48,15 @@ public class CandidateService {
         Optional<CandidateModel> candidateModel = candidateModelRepository.findById(idCandidate);
         candidateModelRepository.delete(candidateModel.get());
         log.info("Deleting {} ", candidateModel);
+    }
+
+    public List<CandidateDTO> findCandidateByFio(String fio) {
+        List<CandidateModel> candidateModels = fio != null ?
+                candidateModelRepository.findCandidateModelByFio(fio) :
+                candidateModelRepository.findAll();
+
+        List<CandidateDTO> candidateDTOS = new ArrayList<>();
+        candidateModels.forEach(candidateModel -> candidateDTOS.add(CandidateDTOMapper.mapToDTO(candidateModel)));
+        return candidateDTOS;
     }
 }
