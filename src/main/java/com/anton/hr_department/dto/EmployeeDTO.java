@@ -12,11 +12,13 @@ import java.sql.Date;
 public class EmployeeDTO {
     private Long idEmployee;
     private String fio;
+    private String email;
+    private String foreignLanguage;
     private String position;
     private double salary;
     private Date dateOfEmployment;
-    private String email;
     private Date dateOfDismissal;
     private Long idEducation;
     private Long idDepartment;
+    private Long idVacancy;
 }

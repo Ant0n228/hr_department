@@ -2,44 +2,52 @@ package com.anton.hr_department.controller.api;
 
 import com.anton.hr_department.dto.CandidateDTO;
 import com.anton.hr_department.service.CandidateService;
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.RequiredArgsConstructor;
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.List;
-
-@RestController
+@Controller
 @RequestMapping("/candidate")
+@RequiredArgsConstructor
 public class CandidateController {
-    CandidateService candidateService;
-
-    @Autowired
-    public CandidateController(CandidateService candidateService) {
-        this.candidateService = candidateService;
-    }
-
-    @PostMapping("/create")
-    public void createCandidate(@RequestBody CandidateDTO candidateDTO) {
-        candidateService.saveCandidate(candidateDTO);
-    }
-
+    private final CandidateService candidateService;
     @GetMapping("/view")
-    public List<CandidateDTO> getCandidate() {
-        return candidateService.getAllCandidate();
+    public String getCandidate(Model model) {
+        model.addAttribute("candidates", candidateService.getAllCandidate());
+        return "candidates";
     }
 
     @GetMapping("/view/{id}")
-    public CandidateDTO getCandidate(@PathVariable long id) {
-        return candidateService.getCandidate(id);
+    public String getCandidate(@PathVariable long id, Model model) {
+        model.addAttribute("candidate", candidateService.getCandidate(id));
+        return "candidate-info";
     }
+
+    @PostMapping("/create")
+    public String createCandidate(CandidateDTO candidateDTO) {
+        candidateService.saveCandidate(candidateDTO);
+        return "redirect:/candidate/view";
+    }
+
 
     @PutMapping("/update")
-    public void updateCandidate(@RequestBody CandidateDTO candidateDTO) {
+    public String updateCandidate(CandidateDTO candidateDTO) {
         candidateService.updateCandidate(candidateDTO);
+        return "redirect:/candidate/view";
     }
 
-    @DeleteMapping("/delete/{id}")
-    public void deleteCandidate(@PathVariable long id) {
+    @PostMapping("/delete/{id}")
+    public String deleteCandidate(@PathVariable long id) {
         candidateService.deleteCandidate(id);
+        return "redirect:/candidate/view";
+    }
+
+    @GetMapping("/search")
+    public String searchByFio(@RequestParam(name = "fio", required = false) String fio,
+                              Model model) {
+        model.addAttribute("candidates", candidateService.findCandidateByFio(fio));
+        return "candidates";
     }
 
 }

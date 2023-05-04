@@ -18,15 +18,10 @@ public class VacancyModel {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long idVacancy;
-
     private String jobTitle;
-
     private Date dateOfPublication;
-
     private double salary;
-
     @Column(nullable = false)
     private Long idRequirements;
-
     private int numberOfVacancy;
 }

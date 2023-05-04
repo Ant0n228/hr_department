@@ -14,6 +14,8 @@ public class EmployeeModelMapper {
                 .setEmail(dto.getEmail())
                 .setDateOfEmployment(dto.getDateOfEmployment())
                 .setIdEducation(dto.getIdEducation())
+                .setIdVacancy(dto.getIdVacancy())
+                .setForeignLanguage(dto.getForeignLanguage())
                 .setIdDepartment(dto.getIdDepartment());
     }
 }

@@ -1,55 +1,56 @@
 package com.anton.hr_department.controller.api;
 
-import com.anton.hr_department.dto.VacancyDTO;
+
 import com.anton.hr_department.dto.VacancyWithRequirementsDTO;
 import com.anton.hr_department.service.VacancyService;
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.RequiredArgsConstructor;
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.List;
-
-@RestController
+@Controller
 @RequestMapping("/vacancy")
+@RequiredArgsConstructor
 public class VacancyController {
-    VacancyService vacancyService;
+    private final VacancyService vacancyService;
 
-    @Autowired
-    public VacancyController(VacancyService vacancyService) {
-        this.vacancyService = vacancyService;
-    }
-
-    @PostMapping("/create")
-    public void createVacancy(@RequestBody VacancyDTO vacancyDTO) {
-        vacancyService.saveVacancy(vacancyDTO);
-    }
-
-    @PostMapping("create/new")
-    public void createVacancyWithRequirements(@RequestBody VacancyWithRequirementsDTO vacancyWithRequirementsDTO) {
-        vacancyService.saveVacancyWithRequirement(vacancyWithRequirementsDTO);
-    }
     @GetMapping("/view")
-    public List<VacancyDTO> getVacancy() {
-        return vacancyService.getAllVacancy();
+    public String viewVacancy(Model model) {
+        model.addAttribute("vacancies", vacancyService.getAllVacancy());
+        return "vacancies";
     }
 
     @GetMapping("/view/{id}")
-    public VacancyDTO getVacancy(@PathVariable long id) {
-        return vacancyService.getVacancy(id);
+    public String getVacancyWithRequirements(@PathVariable long id, Model model) {
+        model.addAttribute("vacancyWithRequirement", vacancyService.getVacancyWithRequirement(id));
+        return "vacancy-info";
     }
 
-    @GetMapping("/view/new/{id}")
-    public VacancyWithRequirementsDTO getVacancyWithRequirements(@PathVariable long id) {
-        return vacancyService.getVacancyWithRequirement(id);
+    @GetMapping("/search")
+    public String searchVacancyByJobTitle(@RequestParam(name = "jobTitle", required = false)
+                                              String jobTitle, Model model) {
+        model.addAttribute("vacancies", vacancyService.findVacancyByTitle(jobTitle));
+        return "vacancies";
+
     }
 
+    @PostMapping("/delete/{id}")
+    public String deleteVacancy(@PathVariable long id) {
+        vacancyService.deleteVacancy(id);
+        return "redirect:/vacancy/view";
+    }
+
+
+    @PostMapping("/create")
+    public String createVacancyWithRequirements(VacancyWithRequirementsDTO vacancyWithRequirementsDTO) {
+        vacancyService.saveVacancyWithRequirement(vacancyWithRequirementsDTO);
+        return "redirect:/vacancy/view";
+    }
 
     @PutMapping("/update")
-    public void updateVacancy(@RequestBody VacancyDTO vacancyDTO) {
-        vacancyService.updateVacancy(vacancyDTO);
+    public String updateVacancyWithRequirements(@RequestBody VacancyWithRequirementsDTO vacancyWithRequirementsDTO) {
+        vacancyService.updateVacancyWithRequirement(vacancyWithRequirementsDTO);
+        return "redirect:/vacancy/view";
     }
 
-    @DeleteMapping("delete/{id}")
-    public void deleteVacancy(@PathVariable long id) {
-        vacancyService.deleteVacancy(id);
-    }
 }
