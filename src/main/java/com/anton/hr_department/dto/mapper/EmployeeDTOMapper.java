@@ -15,6 +15,8 @@ public class EmployeeDTOMapper {
                 .setEmail(model.getEmail())
                 .setDateOfEmployment(model.getDateOfEmployment())
                 .setIdEducation(model.getIdEducation())
+                .setIdVacancy(model.getIdVacancy())
+                .setForeignLanguage(model.getForeignLanguage())
                 .setIdDepartment(model.getIdDepartment());
     }
 }

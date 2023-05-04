@@ -18,22 +18,17 @@ public class EmployeeModel {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long idEmployee;
-
     private String fio;
-
-    private String position;
-
-    private double salary;
-
-    private Date dateOfEmployment;
-
     private String email;
-
+    private String foreignLanguage;
+    private String position;
+    private double salary;
+    private Date dateOfEmployment;
     private Date dateOfDismissal;
-
     @Column(nullable = false)
     private Long idEducation;
-
     @Column(nullable = false)
     private Long idDepartment;
+    @Column(nullable = false)
+    private Long idVacancy;
 }

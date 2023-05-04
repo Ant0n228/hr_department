@@ -17,7 +17,9 @@ public class RequirementsModel {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long idRequirements;
 
+    @Column(columnDefinition = "text")
     private String requirements;
 
+    @Column(columnDefinition = "text")
     private String jobDescription;
 }
