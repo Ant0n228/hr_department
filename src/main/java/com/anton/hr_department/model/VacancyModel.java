@@ -5,7 +5,6 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import lombok.experimental.Accessors;
-import org.springframework.web.bind.annotation.RequestParam;
 
 import java.sql.Date;
 import java.util.List;

@@ -3,8 +3,6 @@ package com.anton.hr_department.controller.api;
 
 
 import com.anton.hr_department.model.VacancyModel;
-import com.anton.hr_department.service.CandidateService;
-import com.anton.hr_department.service.EmployeeService;
 import com.anton.hr_department.service.VacancyService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
@@ -16,8 +14,6 @@ import org.springframework.web.bind.annotation.*;
 @RequiredArgsConstructor
 public class VacancyController {
     private final VacancyService vacancyService;
-    private final EmployeeService employeeService;
-    private final CandidateService candidateService;
 
     @GetMapping("/view")
     public String viewVacancy(Model model) {
