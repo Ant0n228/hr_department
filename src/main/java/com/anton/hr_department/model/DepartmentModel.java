@@ -7,16 +7,22 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 import lombok.experimental.Accessors;
 
+import java.util.List;
+
 @Entity
+@Table(name = "department", schema = "hr_department")
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
 @Accessors(chain = true)
-@Table(name = "department")
 public class DepartmentModel {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long idDepartment;
+
     private String departmentName;
     private int numberOfPeople;
+
+    @OneToMany(mappedBy = "department")
+    private List<EmployeeModel> employeeModel;
 }

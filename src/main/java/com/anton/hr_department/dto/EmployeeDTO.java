@@ -1,5 +1,8 @@
 package com.anton.hr_department.dto;
 
+import com.anton.hr_department.model.DepartmentModel;
+import com.anton.hr_department.model.EducationModel;
+import com.anton.hr_department.model.VacancyModel;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import lombok.experimental.Accessors;
@@ -11,6 +14,7 @@ import java.sql.Date;
 @Accessors(chain = true)
 public class EmployeeDTO {
     private Long idEmployee;
+
     private String fio;
     private String email;
     private String foreignLanguage;
@@ -18,7 +22,9 @@ public class EmployeeDTO {
     private double salary;
     private Date dateOfEmployment;
     private Date dateOfDismissal;
-    private Long idEducation;
-    private Long idDepartment;
-    private Long idVacancy;
+
+    private EducationModel education;
+    private DepartmentModel department;
+    private VacancyModel vacancy;
+
 }

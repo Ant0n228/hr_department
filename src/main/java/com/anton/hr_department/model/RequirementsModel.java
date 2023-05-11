@@ -7,7 +7,7 @@ import lombok.NoArgsConstructor;
 import lombok.experimental.Accessors;
 
 @Entity
-@Table(name = "requirements_for_candidates")
+@Table(name = "requirements_for_candidates", schema = "hr_department")
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
@@ -19,7 +19,10 @@ public class RequirementsModel {
 
     @Column(columnDefinition = "text")
     private String requirements;
-
     @Column(columnDefinition = "text")
     private String jobDescription;
+
+    @OneToOne(mappedBy = "requirements", cascade = CascadeType.ALL)
+    @JoinColumn(name = "id_requirements")
+    private VacancyModel vacancy;
 }

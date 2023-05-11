@@ -16,19 +16,27 @@
             </label><br></p>
         <input type="submit" value="Поиск"/>
     </form>
-    <#list vacancies as vacancy>
-        <div>
-            <p>
-                <a href ="/vacancy/view/${vacancy.idVacancy}">Подробнее</a>
-                | <b>${vacancy.jobTitle}</b>
-                | <b>${vacancy.dateOfPublication}</b>
-                | <b>${vacancy.salary} руб.</b>
-                | <b>${vacancy.numberOfVacancy}</b>
-            </p>
-        </div>
+    <table border="1">
+        <tr>
+            <th>Id</th>
+            <th>Название вакансии: </th>
+            <th>Дата публикации</th>
+            <th>Зарплата</th>
+            <th>Необходимое количество людей:</th>
+
+        </tr>
+        <#list vacancies as vacancy>
+            <tr>
+                <td><a href ="/vacancy/view/${vacancy.idVacancy}">Подробнее</a></td>
+                <td>${vacancy.jobTitle}</td>
+                <td>${vacancy.dateOfPublication}</td>
+                <td>${vacancy.salary}</td>
+                <td>${vacancy.numberOfVacancy}</td>
+            </tr>
         <#else>
-        <h3>Вакансий нет</h3>
-    </#list>
+            <tr><h3>Вакансий нет</h3></tr>
+        </#list>
+    </table>
     <hr>
     <h3>Создать новую вакансию</h3>
     <form action="/vacancy/create" method="post">

@@ -23,8 +23,18 @@
         ${employee.dateOfDismissal}
         <#else> Увольнению не подлежит
     </#if> <br>
-<b>Id образования: </b> ${employee.idEducation} <br>
-<b>Id отдела: </b> ${employee.idDepartment} <br>
+
+<h4>подробнее об образовании работника</h4> <hr>
+<b>Учебное заведение: </b>${employee.education.educationalInstitution} <br>
+<b>Факультет: </b>${employee.education.faculty} <br>
+<b>Специализцация: </b> ${employee.education.specialization} <br>
+<b>Дата поступления в университет: </b> ${employee.education.dateOfAdmission} <br>
+<b>Дата Выпуска(отчисления): </b>
+<#if employee.education.dateOfGraduation??>
+    ${employee.education.dateOfGraduation}
+<#else> ещё учится
+</#if> <br>
+
 <hr>
 
 <h3>Уволить работника</h3>

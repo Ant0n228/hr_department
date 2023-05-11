@@ -21,9 +21,9 @@
         <th>email</th>
         <th>Дата Отклика</th>
         <th>Статус Кандидата</th>
-        <th>иностранный язык</th>
-        <th>id вакансии</th>
-        <th>id образования</th>
+        <th>Иностранный язык</th>
+        <th>Наличие образования</th>
+
     </tr>
     <#list candidates as candidate>
         <tr>
@@ -43,8 +43,11 @@
                     <#else> ${candidate.foreignLanguage}
                 </#if>
             </td>
-            <td>${candidate.idVacancy}</td>
-            <td>${candidate.idEducation}</td>
+            <td><#if candidate.education??>
+                    Присутствует
+                <#else> Отсутствует
+                </#if></td>
+
         </tr>
     <#else>
         <tr><h3>Кандидатов нет</h3></tr>
@@ -57,8 +60,23 @@
     <p>Email: </p><input type="text" name="email"/><br>
     <p>Дата отклика: </p><input type="date" name="dateOfSubmission"/><br>
     <p>Иностраный язык: </p><input type="text" name="foreignLanguage"/><br>
-    <p>Id Вакансии: </p><input type="number" name="idVacancy"/><br>
-    <p>Id Образования: </p><input type="number" name="idEducation"/><br>
+
+    <#--образовние-->
+    <label>Учебное заведение: </label><input type="text" name="education.educationalInstitution"/><br><br>
+    <label>Факультет: </label><input type="text" name="education.faculty"/><br><br>
+    <label>Специализация: </label><input type="text" name="education.specialization"/><br><br>
+    <label>Дата поступления: </label><input type="date" name="education.dateOfAdmission"/><br><br>
+    <label>Дата выпуска(отчисления): </label><input type="date" name="education.dateOfGraduation"/><br><br>
+
+    <#--вакансия-->
+    <label for="idVacancy">Выберете вакансию: </label>
+    <select id="idVacancy" name="idVacancy">
+        <option value="">Выберете вакансию</option>
+        <#list vacancies as vacancy>
+            <option value=${vacancy.idVacancy}>${vacancy.jobTitle}</option>
+        </#list>
+    </select> <br><br>
+
     <input type="submit" value="Создать нового кандидата"/>
 </form>
 </body>

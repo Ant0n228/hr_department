@@ -3,8 +3,10 @@ package com.anton.hr_department.service;
 import com.anton.hr_department.dto.CandidateDTO;
 import com.anton.hr_department.dto.mapper.CandidateDTOMapper;
 import com.anton.hr_department.model.CandidateModel;
-import com.anton.hr_department.model.mapper.CandidateModelMapper;
+import com.anton.hr_department.model.VacancyModel;
 import com.anton.hr_department.repository.CandidateModelRepository;
+import com.anton.hr_department.repository.EducationModelRepository;
+import com.anton.hr_department.repository.VacancyModelRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
@@ -18,36 +20,41 @@ import java.util.Optional;
 @Slf4j
 public class CandidateService {
     private final CandidateModelRepository candidateModelRepository;
+    private final VacancyModelRepository vacancyModelRepository;
+    private final EducationModelRepository educationModelRepository;
 
-    public void saveCandidate(CandidateDTO candidateDTO) {
-        CandidateModel candidateModel = CandidateModelMapper.mapToModel(candidateDTO);
+    private final CandidateDTOMapper candidateDTOMapper;
+
+    public void saveCandidate(CandidateDTO candidateDTO, Long idVacancy) {
+        CandidateModel candidateModel = candidateDTOMapper.mapToModel(candidateDTO);
+        VacancyModel vacancyModel = vacancyModelRepository.findById(idVacancy).orElse(null);
+        candidateModel.setVacancy(vacancyModel);
+        educationModelRepository.save(candidateModel.getEducation());
         candidateModelRepository.save(candidateModel);
-        log.info("Saving {} ", candidateModel);
     }
 
     public List<CandidateDTO> getAllCandidate() {
         Iterable<CandidateModel> candidates = candidateModelRepository.findAll();
         List<CandidateDTO> candidateDTOS = new ArrayList<>();
 
-        candidates.forEach(candidate -> candidateDTOS.add(CandidateDTOMapper.mapToDTO(candidate)));
+        candidates.forEach(candidate -> candidateDTOS.add(candidateDTOMapper.mapToDTO(candidate)));
         return candidateDTOS;
     }
 
     public CandidateDTO getCandidate(long idCandidate) {
         Optional<CandidateModel> candidateModel = candidateModelRepository.findById(idCandidate);
-        return CandidateDTOMapper.mapToDTO(candidateModel.get());
+        return candidateModel.map(candidateDTOMapper::mapToDTO).orElse(null);
     }
 
     public void updateCandidate(CandidateDTO candidateDTO) {
-        CandidateModel candidateModel = CandidateModelMapper.mapToModel(candidateDTO);
+        CandidateModel candidateModel = candidateDTOMapper.mapToModel(candidateDTO);
         candidateModelRepository.save(candidateModel);
 
     }
 
     public void deleteCandidate(long idCandidate) {
         Optional<CandidateModel> candidateModel = candidateModelRepository.findById(idCandidate);
-        candidateModelRepository.delete(candidateModel.get());
-        log.info("Deleting {} ", candidateModel);
+        candidateModel.ifPresent(candidateModelRepository::delete);
     }
 
     public List<CandidateDTO> findCandidateByFio(String fio) {
@@ -56,7 +63,7 @@ public class CandidateService {
                 candidateModelRepository.findAll();
 
         List<CandidateDTO> candidateDTOS = new ArrayList<>();
-        candidateModels.forEach(candidateModel -> candidateDTOS.add(CandidateDTOMapper.mapToDTO(candidateModel)));
+        candidateModels.forEach(candidateModel -> candidateDTOS.add(candidateDTOMapper.mapToDTO(candidateModel)));
         return candidateDTOS;
     }
 }

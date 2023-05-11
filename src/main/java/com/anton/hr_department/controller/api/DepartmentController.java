@@ -23,6 +23,7 @@ public class DepartmentController {
     @GetMapping("/view/{id}")
     public String getDepartment(@PathVariable long id, Model model) {
         model.addAttribute("department", departmentService.getDepartment(id));
+        model.addAttribute("employees", departmentService.getDepartment(id).getEmployeeModel());
         return "department-info";
     }
 

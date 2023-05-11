@@ -2,9 +2,17 @@ package com.anton.hr_department.dto.mapper;
 
 import com.anton.hr_department.dto.CandidateDTO;
 import com.anton.hr_department.model.CandidateModel;
+import lombok.NoArgsConstructor;
+import org.springframework.stereotype.Component;
 
+import java.sql.Date;
+import java.time.LocalDate;
+
+@Component
+@NoArgsConstructor
 public class CandidateDTOMapper {
-    public static CandidateDTO mapToDTO(CandidateModel model) {
+    // mapping CandidateModel into CandidateDTO
+    public CandidateDTO mapToDTO(CandidateModel model) {
         return new CandidateDTO()
                 .setIdCandidate(model.getIdCandidate())
                 .setFio(model.getFio())
@@ -12,7 +20,19 @@ public class CandidateDTOMapper {
                 .setDateOfSubmission(model.getDateOfSubmission())
                 .setApplicationStatus(model.isApplicationStatus())
                 .setForeignLanguage(model.getForeignLanguage())
-                .setIdVacancy(model.getIdVacancy())
-                .setIdEducation(model.getIdEducation());
+                .setVacancy(model.getVacancy())
+                .setEducation(model.getEducation());
+    }
+    // mapping CandidateDTO into CandidateModel
+    public CandidateModel mapToModel(CandidateDTO dto) {
+        return new CandidateModel()
+                .setIdCandidate(dto.getIdCandidate())
+                .setFio(dto.getFio())
+                .setEmail(dto.getEmail())
+                .setDateOfSubmission(Date.valueOf(LocalDate.now()))
+                .setApplicationStatus(dto.isApplicationStatus())
+                .setForeignLanguage(dto.getForeignLanguage())
+                .setVacancy(dto.getVacancy())
+                .setEducation(dto.getEducation());
     }
 }

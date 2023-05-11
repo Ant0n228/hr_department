@@ -27,23 +27,28 @@
         <th>Дата найма</th>
         <th>Email</th>
         <th>Дата увольнения</th>
-        <th>Id Образования</th>
-        <th>Id Отдела</th>
+        <th>Наличие образования</th>
     </tr>
     <#list employees as employee>
         <tr>
             <td><a href ="/employee/view/${employee.idEmployee}">Подробнее</a></td>
             <td>${employee.fio}</td>
             <td>${employee.position}</td>
-            <td>${employee.salary} руб.</td>
+            <td><#if employee.salary < 30>
+                Крошки от хлеба
+                    <#else> ${employee.salary}
+            </#if></td>
             <td>${employee.dateOfEmployment}</td>
             <td>${employee.email}</td>
             <td><#if employee.dateOfDismissal??>
                     ${employee.dateOfDismissal}
                 <#else> Увольнению не подлежит
             </#if></td>
-        <td>${employee.idEducation}</td>
-        <td>${employee.idDepartment}</td>
+            <td><#if employee.education??>
+                Присутствует
+                <#else> Отсутствует
+            </#if></td>
+
         </tr>
     <#else>
         <tr><h3>Работников нет</h3></tr>
@@ -53,13 +58,38 @@
 <hr>
 <h3>Добавить нового работника</h3>
 <form action="/employee/create" method="post">
-    <p>ФИО: </p><input type="text" name="fio"/><br>
-    <p>Позиция: </p><input type="text" name="position"/><br>
-    <p>Зарплата: </p><input type="number" name="salary"/><br>
-    <p>Дата приёма на работу: </p><input type="date" name="dateOfEmployment"/><br>
-    <p>email: </p><input type="text" name="email"/><br>
-    <p>Id образования: </p><input type="number" name="idEducation"/><br>
-    <p>Id отдела: </p><input type="number" name="idDepartment"/><br>
+    <#--основная информация-->
+    <label>ФИО: </label><input type="text" name="fio"/><br><br>
+    <label>Позиция: </label><input type="text" name="position"/><br><br>
+    <label>Зарплата: </label><input type="number" name="salary"/><br><br>
+    <label>Дата приёма на работу: </label><input type="date" name="dateOfEmployment"/><br><br>
+    <label>email: </label><input type="text" name="email"/><br><br>
+
+    <#--образование-->
+    <label>Учебное заведение: </label><input type="text" name="education.educationalInstitution"/><br><br>
+    <label>Факультет: </label><input type="text" name="education.faculty"/><br><br>
+    <label>Специализация: </label><input type="text" name="education.specialization"/><br><br>
+    <label>Дата поступления: </label><input type="date" name="education.dateOfAdmission"/><br><br>
+    <label>Дата выпуска(отчисления): </label><input type="date" name="education.dateOfGraduation"/><br><br>
+
+    <#--добавление отдела-->
+    <label for="idDepartment">Выберете отдел: </label>
+    <select id="idDepartment" name="idDepartment">
+        <option value="">Выберете отдел</option>
+        <#list departments as department>
+            <option value=${department.idDepartment}>${department.departmentName}</option>
+        </#list>
+    </select> <br><br>
+
+    <#--добавление вакансии-->
+    <label for="idVacancy">Выберете вакансию: </label>
+    <select id="idVacancy" name="idVacancy">
+        <option value="">Выберете вакансию</option>
+        <#list vacancies as vacancy>
+            <option value=${vacancy.idVacancy}>${vacancy.jobTitle}</option>
+        </#list>
+    </select> <br><br>
+
     <input type="submit" value="Добавить нового работника"/>
 </form>
 </body>

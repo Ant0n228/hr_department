@@ -25,8 +25,7 @@ public class DepartmentService {
     }
 
     public DepartmentModel getDepartment(long idDepartment) {
-        Optional<DepartmentModel> departmentModel = departmentModelRepository.findById(idDepartment);
-        return departmentModel.get();
+        return departmentModelRepository.findById(idDepartment).orElse(null);
     }
 
     public void updateDepartment(DepartmentModel departmentModel) {
@@ -35,8 +34,7 @@ public class DepartmentService {
 
     public void deleteDepartment(long idDepartment) {
         Optional<DepartmentModel> departmentModel = departmentModelRepository.findById(idDepartment);
-        departmentModelRepository.delete(departmentModel.get());
-        log.info("Deleting {} ", departmentModel);
+        departmentModel.ifPresent(departmentModelRepository::delete);
     }
 
     public List<DepartmentModel> findDepartmentByDepartmentName(String departmentName) {

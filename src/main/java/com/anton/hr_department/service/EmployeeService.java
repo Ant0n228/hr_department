@@ -2,9 +2,13 @@ package com.anton.hr_department.service;
 
 import com.anton.hr_department.dto.EmployeeDTO;
 import com.anton.hr_department.dto.mapper.EmployeeDTOMapper;
+import com.anton.hr_department.model.DepartmentModel;
 import com.anton.hr_department.model.EmployeeModel;
-import com.anton.hr_department.model.mapper.EmployeeModelMapper;
+import com.anton.hr_department.model.VacancyModel;
+import com.anton.hr_department.repository.DepartmentModelRepository;
+import com.anton.hr_department.repository.EducationModelRepository;
 import com.anton.hr_department.repository.EmployeeModelRepository;
+import com.anton.hr_department.repository.VacancyModelRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
@@ -18,47 +22,55 @@ import java.util.Optional;
 @RequiredArgsConstructor
 public class EmployeeService {
     private final EmployeeModelRepository employeeModelRepository;
+    private final DepartmentModelRepository departmentModelRepository;
+    private final VacancyModelRepository vacancyModelRepository;
+    private final EducationModelRepository educationModelRepository;
 
-    public void saveEmployee(EmployeeDTO employeeDTO) {
-        EmployeeModel employeeModel = EmployeeModelMapper.mapToModel(employeeDTO);
+    private final EmployeeDTOMapper employeeDTOMapper;
+
+    public void saveEmployee(EmployeeDTO employeeDTO, Long idDepartment, Long idVacancy) {
+        EmployeeModel employeeModel = employeeDTOMapper.mapToModel(employeeDTO);
+        // TODO посмотреть больше про orElse
+        DepartmentModel departmentModel = departmentModelRepository.findById(idDepartment).orElse(null);
+        VacancyModel vacancyModel = vacancyModelRepository.findById(idVacancy).orElse(null);
+        employeeModel.setDepartment(departmentModel);
+        employeeModel.setVacancy(vacancyModel);
+        educationModelRepository.save(employeeModel.getEducation());
         employeeModelRepository.save(employeeModel);
-        log.info("Saving new {} ", employeeModel);
     }
+
 
     public List<EmployeeDTO> getAllEmployee() {
         Iterable<EmployeeModel> employees = employeeModelRepository.findAll();
         List<EmployeeDTO> employeeDTOS = new ArrayList<>();
 
-        employees.forEach(employee -> employeeDTOS.add(EmployeeDTOMapper.mapToDTO(employee)));
+        employees.forEach(employee -> employeeDTOS.add(employeeDTOMapper.mapToDTO(employee)));
 
         return employeeDTOS;
     }
 
     public EmployeeDTO getEmployee(long idEmployee) {
         Optional<EmployeeModel> employeeModel = employeeModelRepository.findById(idEmployee);
-        log.info("You take {}", employeeModel.get());
-        return EmployeeDTOMapper.mapToDTO(employeeModel.get());
+        return employeeModel.map(employeeDTOMapper::mapToDTO).orElse(null);
     }
 
     public void updateEmployee(EmployeeDTO employeeDTO) {
-        EmployeeModel employeeModel = EmployeeModelMapper.mapToModel(employeeDTO);
+        EmployeeModel employeeModel = employeeDTOMapper.mapToModel(employeeDTO);
         employeeModelRepository.save(employeeModel);
     }
 
     public void deleteEmployee(long idEmployee) {
         Optional<EmployeeModel> employeeModel = employeeModelRepository.findById(idEmployee);
-        employeeModelRepository.delete(employeeModel.get());
-        log.info("Deleting {} ", employeeModel);
+        employeeModel.ifPresent(employeeModelRepository::delete);
     }
 
-    // TODO this two method are quite similar
     public List<EmployeeDTO> findEmployeeByFio(String fio) {
         Iterable<EmployeeModel> employeeModels = fio != null ?
                 employeeModelRepository.findEmployeeModelByFio(fio) :
                 employeeModelRepository.findAll();
 
         List<EmployeeDTO> employeeDTOS = new ArrayList<>();
-        employeeModels.forEach(employeeModel -> employeeDTOS.add(EmployeeDTOMapper.mapToDTO(employeeModel)));
+        employeeModels.forEach(employeeModel -> employeeDTOS.add(employeeDTOMapper.mapToDTO(employeeModel)));
         return employeeDTOS;
     }
 
@@ -68,7 +80,7 @@ public class EmployeeService {
                 employeeModelRepository.findAll();
 
         List<EmployeeDTO> employeeDTOS = new ArrayList<>();
-        employeeModels.forEach(employeeModel -> employeeDTOS.add(EmployeeDTOMapper.mapToDTO(employeeModel)));
+        employeeModels.forEach(employeeModel -> employeeDTOS.add(employeeDTOMapper.mapToDTO(employeeModel)));
         return employeeDTOS;
     }
 }
