@@ -1,22 +1,29 @@
 package com.anton.hr_department.controller.api;
 
 import com.anton.hr_department.dto.EmployeeDTO;
+import com.anton.hr_department.service.DepartmentService;
 import com.anton.hr_department.service.EmployeeService;
+import com.anton.hr_department.service.VacancyService;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
-
 @Controller
 @RequestMapping("/employee")
+@Slf4j
 @RequiredArgsConstructor
 public class EmployeeController {
     private final EmployeeService employeeService;
+    private final DepartmentService departmentService;
+    private final VacancyService vacancyService;
 
     @GetMapping("/view")
-    public String getEmployee(Model model) {
+    public String getEmployees(Model model) {
         model.addAttribute("employees", employeeService.getAllEmployee());
+        model.addAttribute("departments", departmentService.getAllDepartment());
+        model.addAttribute("vacancies", vacancyService.getAllVacancy());
         return "employees";
     }
     @GetMapping("/view/{id}")
@@ -46,8 +53,8 @@ public class EmployeeController {
     }
 
     @PostMapping("/create")
-    public String createEmployee(EmployeeDTO employeeDTO) {
-        employeeService.saveEmployee(employeeDTO);
+    public String createEmployee(EmployeeDTO employeeDTO, @RequestParam Long idDepartment, @RequestParam Long idVacancy) {
+        employeeService.saveEmployee(employeeDTO, idDepartment, idVacancy);
         return "redirect:/employee/view";
     }
 

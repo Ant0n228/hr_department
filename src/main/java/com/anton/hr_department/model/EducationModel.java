@@ -9,7 +9,7 @@ import lombok.experimental.Accessors;
 import java.sql.Date;
 
 @Entity
-@Table(name = "education")
+@Table(name = "education", schema = "hr_department")
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
@@ -18,9 +18,17 @@ public class EducationModel {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long idEducation;
+
     private String educationalInstitution;
     private String faculty;
     private String specialization;
     private Date dateOfAdmission;
     private Date dateOfGraduation;
+
+    @OneToOne(mappedBy = "education", cascade = CascadeType.ALL)
+    @JoinColumn(name = "id_education")
+    private EmployeeModel employee;
+    @OneToOne(mappedBy = "education", cascade = CascadeType.ALL)
+    @JoinColumn(name = "id_education")
+    private CandidateModel candidate;
 }

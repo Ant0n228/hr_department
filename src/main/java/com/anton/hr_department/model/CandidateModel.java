@@ -10,7 +10,7 @@ import lombok.experimental.Accessors;
 import java.sql.Date;
 
 @Entity
-@Table(name = "candidate")
+@Table(name = "candidate", schema = "hr_department")
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
@@ -19,13 +19,19 @@ public class CandidateModel {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long idCandidate;
+
+    @Column(nullable = false)
     private String fio;
+    @Column(nullable = false)
     private String email;
     private String foreignLanguage;
     private Date dateOfSubmission;
     private boolean applicationStatus;
-    @Column(nullable = false)
-    private Long idVacancy;
-    @Column(nullable = false)
-    private Long idEducation;
+
+    @ManyToOne()
+    @JoinColumn(name = "id_vacancy", nullable = false)
+    private VacancyModel vacancy;
+    @OneToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "id_education")
+    private EducationModel education;
 }

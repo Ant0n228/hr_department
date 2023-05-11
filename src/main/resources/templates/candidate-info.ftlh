@@ -25,8 +25,16 @@
 <#else> ${candidate.foreignLanguage}
 </#if> <br>
 
-<b>Id Вакансии: </b> ${candidate.idVacancy} <br>
-<b>Id Образования: </b> ${candidate.idEducation}<br>
+<h4>подробнее об образовании работника</h4> <hr>
+<b>Учебное заведение: </b>${candidate.education.educationalInstitution} <br>
+<b>Факультет: </b>${candidate.education.faculty} <br>
+<b>Специализцация: </b> ${candidate.education.specialization} <br>
+<b>Дата поступления в университет: </b> ${candidate.education.dateOfAdmission} <br>
+<b>Дата Выпуска(отчисления): </b>
+<#if candidate.education.dateOfGraduation??>
+    ${candidate.education.dateOfGraduation}
+<#else> ещё учится
+</#if> <br>
 <hr>
 
 <h3>Удалить кандидата</h3>

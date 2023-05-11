@@ -1,6 +1,8 @@
 package com.anton.hr_department.dto;
 
 
+import com.anton.hr_department.model.EducationModel;
+import com.anton.hr_department.model.VacancyModel;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import lombok.experimental.Accessors;
@@ -17,6 +19,6 @@ public class CandidateDTO {
     private Date dateOfSubmission;
     private boolean applicationStatus = false;
     private String foreignLanguage;
-    private Long idVacancy;
-    private Long idEducation;
+    private VacancyModel vacancy;
+    private EducationModel education;
 }

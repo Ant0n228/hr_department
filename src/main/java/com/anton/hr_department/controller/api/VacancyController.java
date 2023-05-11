@@ -1,7 +1,10 @@
 package com.anton.hr_department.controller.api;
 
 
-import com.anton.hr_department.dto.VacancyWithRequirementsDTO;
+
+import com.anton.hr_department.model.VacancyModel;
+import com.anton.hr_department.service.CandidateService;
+import com.anton.hr_department.service.EmployeeService;
 import com.anton.hr_department.service.VacancyService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
@@ -13,6 +16,8 @@ import org.springframework.web.bind.annotation.*;
 @RequiredArgsConstructor
 public class VacancyController {
     private final VacancyService vacancyService;
+    private final EmployeeService employeeService;
+    private final CandidateService candidateService;
 
     @GetMapping("/view")
     public String viewVacancy(Model model) {
@@ -21,8 +26,10 @@ public class VacancyController {
     }
 
     @GetMapping("/view/{id}")
-    public String getVacancyWithRequirements(@PathVariable long id, Model model) {
-        model.addAttribute("vacancyWithRequirement", vacancyService.getVacancyWithRequirement(id));
+    public String getVacancy(@PathVariable long id, Model model) {
+        model.addAttribute("vacancy", vacancyService.getVacancy(id));
+        model.addAttribute("employees", vacancyService.getVacancy(id).getEmployees());
+        model.addAttribute("candidates", vacancyService.getVacancy(id).getCandidates());
         return "vacancy-info";
     }
 
@@ -31,7 +38,6 @@ public class VacancyController {
                                               String jobTitle, Model model) {
         model.addAttribute("vacancies", vacancyService.findVacancyByTitle(jobTitle));
         return "vacancies";
-
     }
 
     @PostMapping("/delete/{id}")
@@ -42,14 +48,14 @@ public class VacancyController {
 
 
     @PostMapping("/create")
-    public String createVacancyWithRequirements(VacancyWithRequirementsDTO vacancyWithRequirementsDTO) {
-        vacancyService.saveVacancyWithRequirement(vacancyWithRequirementsDTO);
+    public String createVacancy(VacancyModel vacancy) {
+        vacancyService.saveVacancy(vacancy);
         return "redirect:/vacancy/view";
     }
 
     @PutMapping("/update")
-    public String updateVacancyWithRequirements(@RequestBody VacancyWithRequirementsDTO vacancyWithRequirementsDTO) {
-        vacancyService.updateVacancyWithRequirement(vacancyWithRequirementsDTO);
+    public String updateVacancy(@RequestBody VacancyModel vacancy) {
+        vacancyService.update(vacancy);
         return "redirect:/vacancy/view";
     }
 
