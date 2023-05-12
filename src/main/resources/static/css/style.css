@@ -1,0 +1,13 @@
+.vacancy:hover {
+    transition: 0.5s;
+    transform: scale(1.02);
+}
+
+.vacancy-link {
+    color: #000 !important;
+    text-decoration: none
+}
+
+.add {
+    margin-bottom: 10px;
+}
