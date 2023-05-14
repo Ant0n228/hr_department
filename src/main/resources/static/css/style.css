@@ -11,3 +11,22 @@
 .add {
     margin-bottom: 10px;
 }
+
+
+.previous {
+    background-color: gray;
+    color: black;
+    text-decoration: none;
+    display: inline-block;
+    padding: 8px 16px;
+    font-size: 25px;
+}
+
+.previous:hover {
+    background-color: black;
+    color: white;
+}
+
+.round {
+    border-radius: 50%;
+}

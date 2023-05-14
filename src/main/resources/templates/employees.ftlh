@@ -17,61 +17,69 @@
         </div>
 
         <div class="col-2">
-            <button  class="btn btn-primary" style="width: 100%" formaction="/employee/view">Сбросить Поиск</button>
+            <button class="btn btn-primary" style="width: 100%" formaction="/employee/view">Сбросить Поиск</button>
         </div>
-        <button style="width: 100%" type="submit" class="btn btn-dark" >Поиск</button>
+        <button style="width: 100%" type="submit" class="btn btn-dark">Поиск</button>
     </form>
-    <br>
-    <table class="table table-bordered">
-        <thead class="table-secondary">
-        <tr>
-            <th>Id</th>
-            <th>Фио</th>
-            <th>Позиция</th>
-            <th>Зарплата</th>
-            <th>Дата найма</th>
-            <th>Email</th>
-            <th>Дата увольнения</th>
-            <th>Наличие образования</th>
-        </tr>
-        </thead>
-        <tbody>
-        <#list employees as employee>
+    <#if employees?size != 0>
+        <table class="table table-bordered">
+            <thead class="table-secondary">
             <tr>
-                <td>
-                    <a class="link-secondary link-offset-2 link-underline link-underline-opacity-0 link-opacity-10-hover"
-                       href="/employee/view/${employee.idEmployee}">Подробнее</a></td>
-                <td>${employee.fio}</td>
-                <td>${employee.position}</td>
-                <td><#if employee.salary < 30>
-                        Крошки от хлеба
-                    <#else> ${employee.salary}
-                    </#if></td>
-                <td>${employee.dateOfEmployment}</td>
-                <td>${employee.email}</td>
-                <td><#if employee.dateOfDismissal??>
-                        ${employee.dateOfDismissal}
-                    <#else> Увольнению не подлежит
-                    </#if></td>
-                <td><#if employee.education??>
-                        Присутствует
-                    <#else> Отсутствует
-                    </#if></td>
+                <th>Id</th>
+                <th>Фио</th>
+                <th>Должность</th>
+                <th>Зарплата</th>
+                <th>Дата найма</th>
+                <th>Email</th>
+                <th>Дата увольнения</th>
+                <th>Наличие образования</th>
             </tr>
-        <#else>
-            <tr><h3>Сатрудников нет</h3></tr>
-        </#list>
-        </tbody>
-    </table>
+            </thead>
+            <tbody>
+            <#list employees as employee>
+                <tr>
+                    <th scope="row">
+                        <a class="link-secondary link-offset-2 link-underline link-underline-opacity-0 link-opacity-10-hover"
+                           href="/employee/view/${employee.idEmployee}">Подробнее</a></th>
+                    <td>${employee.fio}</td>
+                    <td>${employee.position}</td>
+                    <td>
+                        <#if employee.salary < 30>
+                            Крошки от хлеба
+                        <#else> ${employee.salary} руб.
+                        </#if>
+                    </td>
+                    <td>${employee.dateOfEmployment}</td>
+                    <td>${employee.email}</td>
+                    <td>
+                        <#if employee.dateOfDismissal??>
+                            ${employee.dateOfDismissal}
+                        <#else> Увольнению не подлежит
+                        </#if>
+                    </td>
+                    <td>
+                        <#if employee.education??>
+                            Присутствует
+                        <#else> Отсутствует
+                        </#if>
+                    </td>
+                </tr>
 
-    <#--add new employee-->
+            </#list>
+            </tbody>
+        </table>
+    <#else>
+        <tr><h3>Сатрудников нет</h3></tr>
+    </#if>
+
+<#--add new employee-->
 
     <a class="btn btn-dark mt-3 mb-3" style="text-align: center; width: 100%"
        data-toggle="collapse" href="#mainCollapse" role="button"
        aria-expanded="true" aria-controls="collapseExample">
-        добавить нового Кандидата
+        Добавить нового сотрудника
     </a>
-    <#-- required id?-->
+<#-- required id?-->
     <div class="collapse mb-3" id="mainCollapse" style="margin-bottom: 10px">
         <form action="/employee/create" method="post">
             <div class="form-group" style="margin-bottom: 10px">
