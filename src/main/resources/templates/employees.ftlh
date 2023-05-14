@@ -1,96 +1,156 @@
-<!DOCTYPE html>
-<html lang="ru">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport"
-          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
-    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+<#import "blocks/template.ftlh" as t>
+<@t.template>
+    <nav class="nav nav-pills nav-fill navbar-dark" style="margin-bottom:30px">
+        <a class="nav-link active" aria-current="page" href="/employee/view">Сотрудники</a>
+        <a class="nav-link" href="/vacancy/view">Вакансии</a>
+        <a class="nav-link" href="/candidate/view">Кандидаты</a>
+        <a class="nav-link" href="/department/view">Отделы</a>
+    </nav>
+    <h2 style="text-align: center; margin-bottom:20px">Поиск сотрудника</h2>
+    <form class="row g-3 align-items-center" action="/employee/search" method="get" style="margin-bottom: 20px">
+        <div class="col-4">
+            <input type="text" name="position" class="form-control" placeholder="Должность">
+        </div>
 
-    <title>Employees</title>
-</head>
-<body>
-<h4>все работники</h4> <hr>
-<form action="/employee/search/fio" method="get">
-    <p>Поиск работника по фио: <input type="text" name="fio"><br></p>
-    <input type="submit" value="Поиск"/>
-</form>
-<form action="/employee/search/position" method="get">
-    <p>Поиск работников по позиции: <input type="text" name="position"><br></p>
-    <input type="submit" value="Поиск"/>
-</form>
-<table border="1">
-    <tr>
-        <th>Id</th>
-        <th>Фио</th>
-        <th>Позиция</th>
-        <th>Зарплата</th>
-        <th>Дата найма</th>
-        <th>Email</th>
-        <th>Дата увольнения</th>
-        <th>Наличие образования</th>
-    </tr>
-    <#list employees as employee>
-        <tr>
-            <td><a href ="/employee/view/${employee.idEmployee}">Подробнее</a></td>
-            <td>${employee.fio}</td>
-            <td>${employee.position}</td>
-            <td><#if employee.salary < 30>
-                Крошки от хлеба
-                    <#else> ${employee.salary}
-            </#if></td>
-            <td>${employee.dateOfEmployment}</td>
-            <td>${employee.email}</td>
-            <td><#if employee.dateOfDismissal??>
-                    ${employee.dateOfDismissal}
-                <#else> Увольнению не подлежит
-            </#if></td>
-            <td><#if employee.education??>
-                Присутствует
-                <#else> Отсутствует
-            </#if></td>
+        <div class="col-6">
+            <input type="text" name="fio" class="form-control" placeholder="Фио">
+        </div>
 
-        </tr>
+        <div class="col-2">
+            <button class="btn btn-primary" style="width: 100%" formaction="/employee/view">Сбросить Поиск</button>
+        </div>
+        <button style="width: 100%" type="submit" class="btn btn-dark">Поиск</button>
+    </form>
+    <#if employees?size != 0>
+        <table class="table table-bordered">
+            <thead class="table-secondary">
+            <tr>
+                <th>Id</th>
+                <th>Фио</th>
+                <th>Должность</th>
+                <th>Зарплата</th>
+                <th>Дата найма</th>
+                <th>Email</th>
+                <th>Дата увольнения</th>
+                <th>Наличие образования</th>
+            </tr>
+            </thead>
+            <tbody>
+            <#list employees as employee>
+                <tr>
+                    <th scope="row">
+                        <a class="link-secondary link-offset-2 link-underline link-underline-opacity-0 link-opacity-10-hover"
+                           href="/employee/view/${employee.idEmployee}">Подробнее</a></th>
+                    <td>${employee.fio}</td>
+                    <td>${employee.position}</td>
+                    <td>
+                        <#if employee.salary < 30>
+                            Крошки от хлеба
+                        <#else> ${employee.salary} руб.
+                        </#if>
+                    </td>
+                    <td>${employee.dateOfEmployment}</td>
+                    <td>${employee.email}</td>
+                    <td>
+                        <#if employee.dateOfDismissal??>
+                            ${employee.dateOfDismissal}
+                        <#else> Увольнению не подлежит
+                        </#if>
+                    </td>
+                    <td>
+                        <#if employee.education??>
+                            Присутствует
+                        <#else> Отсутствует
+                        </#if>
+                    </td>
+                </tr>
+
+            </#list>
+            </tbody>
+        </table>
     <#else>
-        <tr><h3>Работников нет</h3></tr>
-    </#list>
-</table>
+        <tr><h3>Сатрудников нет</h3></tr>
+    </#if>
 
-<hr>
-<h3>Добавить нового работника</h3>
-<form action="/employee/create" method="post">
-    <#--основная информация-->
-    <label>ФИО: </label><input type="text" name="fio"/><br><br>
-    <label>Позиция: </label><input type="text" name="position"/><br><br>
-    <label>Зарплата: </label><input type="number" name="salary"/><br><br>
-    <label>Дата приёма на работу: </label><input type="date" name="dateOfEmployment"/><br><br>
-    <label>email: </label><input type="text" name="email"/><br><br>
+<#--add new employee-->
 
-    <#--образование-->
-    <label>Учебное заведение: </label><input type="text" name="education.educationalInstitution"/><br><br>
-    <label>Факультет: </label><input type="text" name="education.faculty"/><br><br>
-    <label>Специализация: </label><input type="text" name="education.specialization"/><br><br>
-    <label>Дата поступления: </label><input type="date" name="education.dateOfAdmission"/><br><br>
-    <label>Дата выпуска(отчисления): </label><input type="date" name="education.dateOfGraduation"/><br><br>
+    <a class="btn btn-dark mt-3 mb-3" style="text-align: center; width: 100%"
+       data-toggle="collapse" href="#mainCollapse" role="button"
+       aria-expanded="true" aria-controls="collapseExample">
+        Добавить нового сотрудника
+    </a>
+<#-- required id?-->
+    <div class="collapse mb-3" id="mainCollapse" style="margin-bottom: 10px">
+        <form action="/employee/create" method="post">
+            <div class="form-group" style="margin-bottom: 10px">
+                <label for="fio">Фио: </label>
+                <input type="text" required class="form-control" name="fio">
+            </div>
+            <div class="form-group" style="margin-bottom: 10px">
+                <label for="position">Должность: </label>
+                <input type="text" required class="form-control" name="position">
+            </div>
+            <div class="form-group" style="margin-bottom: 10px">
+                <label for="salary">Зарплата: </label>
+                <div class="input-group mb-3">
+                    <input type="number" required class="form-control" name="salary">
+                    <div class="input-group-append">
+                        <span class="input-group-text">₽</span>
+                    </div>
+                </div>
+            </div>
+            <div class="form-group" style="margin-bottom: 10px">
+                <label for="dateOfEmployment">Дата приёма на работу: </label>
+                <input type="date" required class="form-control" name="dateOfEmployment"/>
+            </div>
+            <div class="form-group" style="margin-bottom: 10px">
+                <label for="email">Email: </label>
+                <input type="text" required class="form-control" name="email"/>
+            </div>
 
-    <#--добавление отдела-->
-    <label for="idDepartment">Выберете отдел: </label>
-    <select id="idDepartment" name="idDepartment">
-        <option value="">Выберете отдел</option>
-        <#list departments as department>
-            <option value=${department.idDepartment}>${department.departmentName}</option>
-        </#list>
-    </select> <br><br>
+            <#--Education-->
 
-    <#--добавление вакансии-->
-    <label for="idVacancy">Выберете вакансию: </label>
-    <select id="idVacancy" name="idVacancy">
-        <option value="">Выберете вакансию</option>
-        <#list vacancies as vacancy>
-            <option value=${vacancy.idVacancy}>${vacancy.jobTitle}</option>
-        </#list>
-    </select> <br><br>
+            <div class="form-group" style="margin-bottom: 10px">
+                <label for="education.educationalInstitution">Учебное заведение: </label>
+                <input type="text" required class="form-control" name="education.educationalInstitution"/>
+            </div>
+            <div class="form-group" style="margin-bottom: 10px">
+                <label for="education.faculty">Факультет: </label>
+                <input type="text" required class="form-control" name="education.faculty"/>
+            </div>
+            <div class="form-group" style="margin-bottom: 10px">
+                <label for="education.specialization">Специализация: </label>
+                <input type="text" required class="form-control" name="education.specialization"/>
+            </div>
+            <div class="form-group" style="margin-bottom: 10px">
+                <label for="education.dateOfAdmission">Дата поступления: </label>
+                <input type="date" required class="form-control" name="education.dateOfAdmission"/>
+            </div>
+            <div class="form-group" style="margin-bottom: 10px">
+                <label for="education.dateOfGraduation">Дата выпуска (отчисления): </label>
+                <input type="date" required class="form-control" name="education.dateOfGraduation"/>
+            </div>
 
-    <input type="submit" value="Добавить нового работника"/>
-</form>
-</body>
-</html>
+            <div class="form-group" style="margin-bottom: 10px">
+                <label for="idDepartment">Выберете отдел: </label>
+                <select id="idDepartment" required name="idDepartment" class="form-control">
+                    <option value="">Выберете отдел</option>
+                    <#list departments as deparment>
+                        <option value=${deparment.idDepartment}>${deparment.departmentName}</option>
+                    </#list>
+                </select>
+            </div>
+
+            <div class="form-group" style="padding-bottom: 10px">
+                <label for="idVacancy">Выберете вакансию: </label>
+                <select id="idVacancy" required name="idVacancy" class="form-control">
+                    <option value="">Выберете вакансию</option>
+                    <#list vacancies as vacancy>
+                        <option value=${vacancy.idVacancy}>${vacancy.jobTitle}</option>
+                    </#list>
+                </select>
+            </div>
+            <button type="submit" style="width: 100%" class="btn btn-dark">Добавить</button>
+        </form>
+    </div>
+</@t.template>

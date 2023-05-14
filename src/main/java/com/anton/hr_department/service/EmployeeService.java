@@ -69,9 +69,7 @@ public class EmployeeService {
                 employeeModelRepository.findEmployeeModelByFio(fio) :
                 employeeModelRepository.findAll();
 
-        List<EmployeeDTO> employeeDTOS = new ArrayList<>();
-        employeeModels.forEach(employeeModel -> employeeDTOS.add(employeeDTOMapper.mapToDTO(employeeModel)));
-        return employeeDTOS;
+        return transfer(employeeModels);
     }
 
     public List<EmployeeDTO> findEmployeeByPosition(String position) {
@@ -79,6 +77,10 @@ public class EmployeeService {
                 employeeModelRepository.findEmployeeModelByPosition(position) :
                 employeeModelRepository.findAll();
 
+        return transfer(employeeModels);
+    }
+
+    private List<EmployeeDTO> transfer(Iterable<EmployeeModel> employeeModels) {
         List<EmployeeDTO> employeeDTOS = new ArrayList<>();
         employeeModels.forEach(employeeModel -> employeeDTOS.add(employeeDTOMapper.mapToDTO(employeeModel)));
         return employeeDTOS;

@@ -1,108 +1,152 @@
-<!DOCTYPE html>
-<html lang="ru">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport"
-          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
-    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+<#import "blocks/template.ftlh" as t>
+<@t.template>
+    <div class="row" style="margin-bottom: 40px">
+        <a href="javascript:history.back()" class="nav-link col-2 position-relative"
+           style="font-size:40px; padding-top:6px">&#8249;</a>
+        <h2 style="text-align: center; padding: 19px" class="col-8 position-relative">Подробнее об вакансии</h2>
+    </div>
+    <div class="row">
+        <div class="col-6">
+            <h3 style="text-align: center; padding-bottom: 20px">Основная информация</h3>
+            <dl class="row" style="padding-bottom:0">
+                <dd class="col-sm-9">
+                    <dl class="row">
+                        <dt class="col-sm-5">Название вакансии:</dt>
+                        <dd class="col-sm-7">${vacancy.jobTitle}</dd>
+                    </dl>
+                </dd>
+                <dd class="col-sm-9">
+                    <dl class="row">
+                        <dt class="col-sm-5">Зарплата:</dt>
+                        <dd class="col-sm-7">${vacancy.salary}</dd>
+                    </dl>
+                </dd>
+                <dd class="col-sm-9">
+                    <dl class="row">
+                        <dt class="col-sm-5">Дата публикации:</dt>
+                        <dd class="col-sm-7">${vacancy.dateOfPublication}</dd>
+                    </dl>
+                </dd>
+                <dd class="col-sm-9">
+                    <dl class="row">
+                        <dt class="col-sm-5">Требования к кандидату:</dt>
+                        <dd class="col-sm-7">${vacancy.requirements.requirements}</dd>
+                    </dl>
+                </dd>
+                <dd class="col-sm-9">
+                    <dl class="row">
+                        <dt class="col-sm-5">Описание вакансии:</dt>
+                        <dd class="col-sm-7">${vacancy.requirements.jobDescription}</dd>
+                    </dl>
+                </dd>
+                <dd class="col-sm-9">
+                    <dl class="row">
+                        <dt class="col-sm-5">Количество вакансий:</dt>
+                        <dd class="col-sm-7">${vacancy.numberOfVacancy}</dd>
+                    </dl>
+                </dd>
+            </dl>
+        </div>
 
-    <title>Vacancy number ${vacancy.idVacancy}</title>
-</head>
-<body>
-    <h4>подробнее о вакансии</h4> <hr>
-    <b>Название вакансии: </b>${vacancy.jobTitle} <br>
-    <b>Зарплата: </b>${vacancy.salary} <br>
-    <b>Дата публикации: </b>${vacancy.dateOfPublication} <br>
-    <b>Требования к кандидату: </b>
-    <#if vacancy.requirements.requirements??>
-        ${vacancy.requirements.requirements}
-    </#if> <br>
-    <b>Описание вакансии: </b>${vacancy.requirements.jobDescription} <br>
-    <b>Количество вакансий: </b>${vacancy.numberOfVacancy} <br>
+        <div class="col-6">
 
-    <hr>
-    <h4>Работники работающие по этой вакансии</h4>
-    <table border="1">
-        <tr>
-            <th>Id</th>
-            <th>Фио</th>
-            <th>Позиция</th>
-            <th>Зарплата</th>
-            <th>Дата найма</th>
-            <th>Email</th>
-            <th>Дата увольнения</th>
-            <th>Наличие образования</th>
-        </tr>
-        <#list employees as employee>
-            <tr>
-                <td><a href ="/employee/view/${employee.idEmployee}">Подробнее</a></td>
-                <td>${employee.fio}</td>
-                <td>${employee.position}</td>
-                <td><#if employee.salary < 30>
-                        Крошки от хлеба
-                    <#else> ${employee.salary}
-                    </#if></td>
-                <td>${employee.dateOfEmployment}</td>
-                <td>${employee.email}</td>
-                <td><#if employee.dateOfDismissal??>
-                        ${employee.dateOfDismissal}
-                    <#else> Увольнению не подлежит
-                    </#if></td>
-                <td><#if employee.education??>
-                        Присутствует
-                    <#else> Отсутствует
-                    </#if></td>
+            <div class="col-12 collapse" id="multiCollapseExample1"
+                 style="padding-bottom: 20px">
+                <#if candidates?size != 0>
+                    <h3 style="text-align: center; padding-bottom: 20px">Подробнее об кандидатах</h3>
+                    <table class="table table-bordered">
+                        <thead class="table-secondary">
+                        <tr>
+                            <th scope="col">Id кандидата</th>
+                            <th scope="col">Фио</th>
+                            <th scope="col">Email</th>
+                            <th scope="col">Наличие образования</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <#list candidates as candidate>
+                            <tr>
+                                <th scope="row">
+                                    <a class="link-secondary link-offset-2 link-underline link-underline-opacity-0 link-opacity-10-hover"
+                                       href="/candidate/view/${candidate.idCandidate}">Подробнее</a></th>
+                                <td>${candidate.fio}</td>
+                                <td>${candidate.email}</td>
+                                <td>
+                                    <#if candidate.education??>
+                                        Присутствует
+                                    <#else> Отсутствует
+                                    </#if>
+                                </td>
+                            </tr>
+                        </#list>
+                        </tbody>
+                    </table>
+                <#else> <h3 style="text-align: center; padding-bottom: 20px">Кандидатов нет</h3>
+                </#if>
+            </div>
 
-            </tr>
-        <#else>
-            <tr><h3>Работников нет</h3></tr>
-        </#list>
-    </table>
-    <h4>Кандидаты вакансии</h4>
-    <table border="1">
-        <tr>
-            <th>Id кандидата</th>
-            <th>Фио</th>
-            <th>email</th>
-            <th>Дата Отклика</th>
-            <th>Статус Кандидата</th>
-            <th>Иностранный язык</th>
-            <th>Наличие образования</th>
 
-        </tr>
-        <#list candidates as candidate>
-            <tr>
-                <td><a href ="/candidate/view/${candidate.idCandidate}">Подробнее</a></td>
-                <td>${candidate.fio}</td>
-                <td>${candidate.email}</td>
-                <td>${candidate.dateOfSubmission}</td>
-                <td>
-                    <#if !candidate.applicationStatus>
-                        ещё не принят
-                    <#else> принят
-                    </#if>
-                </td>
-                <td>
-                    <#if candidate.foreignLanguage??>
-                        не знает иностранных языков
-                    <#else> ${candidate.foreignLanguage}
-                    </#if>
-                </td>
-                <td><#if candidate.education??>
-                        Присутствует
-                    <#else> Отсутствует
-                    </#if></td>
+            <div class="col-12 collapse" id="multiCollapseExample2"
+                 style="padding-bottom: 20px">
+                <#if employees?size != 0>
+                    <h3 style="text-align: center; padding-bottom: 20px">Подробнее об сотрудниках</h3>
+                    <table class="table table-bordered">
+                        <thead class="table-secondary">
+                        <tr>
+                            <th>Id</th>
+                            <th>Фио</th>
+                            <th>Должность</th>
+                            <th>Наличие образования</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <#list employees as employee>
+                            <tr>
+                                <th scope="row">
+                                    <a class="link-secondary link-offset-2 link-underline link-underline-opacity-0 link-opacity-10-hover"
+                                       href="/employee/view/${employee.idEmployee}">Подробнее</a></th>
+                                <td>${employee.fio}</td>
+                                <td>${employee.position}</td>
+                                <td>
+                                    <#if employee.education??>
+                                        Присутствует
+                                    <#else> Отсутствует
+                                    </#if>
+                                </td>
+                            </tr>
+                        </#list>
+                        </tbody>
+                    </table>
+                <#else> <h3 style="text-align: center; padding-bottom: 20px">Сотрудников нет</h3>
+                </#if>
+            </div>
 
-            </tr>
-        <#else>
-            <tr><h3>Кандидатов нет</h3></tr>
-        </#list>
-    </table>
+        </div>
+    </div>
 
-    <h3>Удалить вакансию</h3>
-    <form action="/vacancy/delete/${vacancy.idVacancy}" method="post">
-        <input type="submit" value="Удалить вакансию"/>
-    </form>
+    <div class="row">
+        <#if candidates?size != 0>
+            <a class="btn btn-dark mt-3 mb-3 col-2" style="text-align: center; margin-right:14px"
+               data-toggle="collapse" href="#multiCollapseExample1" role="button"
+               aria-expanded="true" aria-controls="collapseExample">
+                Показать кандидатов
+            </a>
+        </#if>
+        <#if employees?size != 0>
+            <a class="btn btn-dark mt-3 mb-3 col-2" style="text-align: center"
+               data-toggle="collapse" href="#multiCollapseExample2" role="button"
+               aria-expanded="true" aria-controls="collapseExample">
+                Показать сотрудников
+            </a>
+        </#if>
 
-</body>
-</html>
+        <form class="align-items-center mt-3 md-3 col-2"
+              action="/vacancy/delete/${vacancy.idVacancy}"
+              method="post">
+            <button style="width: 100%" type="submit" class="btn btn-danger">
+                Убрать вакансию
+            </button>
+        </form>
+    </div>
+
+</@t.template>

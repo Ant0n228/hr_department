@@ -35,7 +35,7 @@ public class EmployeeController {
     @GetMapping("/search/fio")
     public String  searchEmployeeByFio(@RequestParam(name = "fio", required = false)
                                        String fio, Model model){
-        model.addAttribute("employees", employeeService.findEmployeeByFio(fio));
+        model.addAttribute("position", employeeService.findEmployeeByFio(fio));
         return "employees";
     }
 
@@ -46,6 +46,14 @@ public class EmployeeController {
         return "employees";
     }
 
+    @GetMapping("/search")
+    public String searchEmployee(@RequestParam(name = "position", required = false) String position,
+                                 @RequestParam(name = "fio", required = false) String fio,
+                                 Model model) {
+        model.addAttribute("employees", employeeService.findEmployeeByPosition(position));
+        model.addAttribute("employees", employeeService.findEmployeeByFio(fio));
+        return "employees";
+    }
     @PostMapping("/delete/{id}")
     public String deleteEmployee(@PathVariable long id) {
         employeeService.deleteEmployee(id);
