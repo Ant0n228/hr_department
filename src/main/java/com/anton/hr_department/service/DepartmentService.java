@@ -20,7 +20,7 @@ public class DepartmentService {
         log.info("Saving {} ", departmentModel);
     }
 
-    public List<DepartmentModel> getAllDepartment() {
+    public List<DepartmentModel> getAllDepartments() {
         return departmentModelRepository.findAll();
     }
 

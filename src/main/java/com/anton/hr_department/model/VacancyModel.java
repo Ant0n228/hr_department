@@ -6,7 +6,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 import lombok.experimental.Accessors;
 
-import java.sql.Date;
+import java.time.LocalDate;
 import java.util.List;
 
 @Entity
@@ -22,7 +22,7 @@ public class VacancyModel {
 
     @Column(nullable = false)
     private String jobTitle;
-    private Date dateOfPublication;
+    private LocalDate dateOfPublication;
     private double salary;
     private int numberOfVacancy;
 
@@ -32,6 +32,12 @@ public class VacancyModel {
 
     @OneToMany(mappedBy = "vacancy")
     private List<EmployeeModel> employees;
+
     @OneToMany(mappedBy = "vacancy")
     private List<CandidateModel> candidates;
+
+    @PrePersist
+    public void init() {
+        dateOfPublication = LocalDate.now();
+    }
 }

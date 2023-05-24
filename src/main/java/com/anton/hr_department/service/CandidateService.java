@@ -33,7 +33,7 @@ public class CandidateService {
         candidateModelRepository.save(candidateModel);
     }
 
-    public List<CandidateDTO> getAllCandidate() {
+    public List<CandidateDTO> getAllCandidates() {
         Iterable<CandidateModel> candidates = candidateModelRepository.findAll();
         List<CandidateDTO> candidateDTOS = new ArrayList<>();
 

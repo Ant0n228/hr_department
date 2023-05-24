@@ -5,8 +5,6 @@ import com.anton.hr_department.model.CandidateModel;
 import lombok.NoArgsConstructor;
 import org.springframework.stereotype.Component;
 
-import java.sql.Date;
-import java.time.LocalDate;
 
 @Component
 @NoArgsConstructor
@@ -29,7 +27,7 @@ public class CandidateDTOMapper {
                 .setIdCandidate(dto.getIdCandidate())
                 .setFio(dto.getFio())
                 .setEmail(dto.getEmail())
-                .setDateOfSubmission(Date.valueOf(LocalDate.now()))
+                .setDateOfSubmission(dto.getDateOfSubmission())
                 .setApplicationStatus(dto.isApplicationStatus())
                 .setForeignLanguage(dto.getForeignLanguage())
                 .setVacancy(dto.getVacancy())

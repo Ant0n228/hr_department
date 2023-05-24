@@ -8,6 +8,9 @@ import java.util.List;
 
 @Repository
 public interface EmployeeModelRepository extends JpaRepository<EmployeeModel, Long> {
-    List<EmployeeModel> findEmployeeModelByFio(String fio);
-    List<EmployeeModel> findEmployeeModelByPosition(String position);
+
+    EmployeeModel findByFio(String fio);
+    EmployeeModel findByEmail(String email);
+    List<EmployeeModel> findByPosition(String position);
+
 }

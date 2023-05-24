@@ -7,7 +7,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 import lombok.experimental.Accessors;
 
-import java.sql.Date;
+import java.time.LocalDate;
 
 @Entity
 @Table(name = "candidate", schema = "hr_department")
@@ -25,13 +25,20 @@ public class CandidateModel {
     @Column(nullable = false)
     private String email;
     private String foreignLanguage;
-    private Date dateOfSubmission;
+    private LocalDate dateOfSubmission;
     private boolean applicationStatus;
 
     @ManyToOne()
     @JoinColumn(name = "id_vacancy", nullable = false)
     private VacancyModel vacancy;
+
     @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "id_education")
     private EducationModel education;
+
+    @PrePersist
+    public void init() {
+        dateOfSubmission = LocalDate.now();
+        applicationStatus = false;
+    }
 }

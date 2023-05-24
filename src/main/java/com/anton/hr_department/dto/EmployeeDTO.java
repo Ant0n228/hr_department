@@ -7,7 +7,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 import lombok.experimental.Accessors;
 
-import java.sql.Date;
+import java.time.LocalDate;
 
 @Data
 @NoArgsConstructor
@@ -20,8 +20,8 @@ public class EmployeeDTO {
     private String foreignLanguage;
     private String position;
     private double salary;
-    private Date dateOfEmployment;
-    private Date dateOfDismissal;
+    private LocalDate dateOfEmployment;
+    private LocalDate dateOfDismissal;
 
     private EducationModel education;
     private DepartmentModel department;

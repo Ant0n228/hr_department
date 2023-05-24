@@ -6,7 +6,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 import lombok.experimental.Accessors;
 
-import java.sql.Date;
+import java.time.LocalDate;
 
 @Entity
 @Table(name = "education", schema = "hr_department")
@@ -22,12 +22,13 @@ public class EducationModel {
     private String educationalInstitution;
     private String faculty;
     private String specialization;
-    private Date dateOfAdmission;
-    private Date dateOfGraduation;
+    private LocalDate dateOfAdmission;
+    private LocalDate dateOfGraduation;
 
     @OneToOne(mappedBy = "education", cascade = CascadeType.ALL)
     @JoinColumn(name = "id_education")
     private EmployeeModel employee;
+
     @OneToOne(mappedBy = "education", cascade = CascadeType.ALL)
     @JoinColumn(name = "id_education")
     private CandidateModel candidate;

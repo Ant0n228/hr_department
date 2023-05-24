@@ -30,7 +30,6 @@ public class EmployeeService {
 
     public void saveEmployee(EmployeeDTO employeeDTO, Long idDepartment, Long idVacancy) {
         EmployeeModel employeeModel = employeeDTOMapper.mapToModel(employeeDTO);
-        // TODO посмотреть больше про orElse
         DepartmentModel departmentModel = departmentModelRepository.findById(idDepartment).orElse(null);
         VacancyModel vacancyModel = vacancyModelRepository.findById(idVacancy).orElse(null);
         employeeModel.setDepartment(departmentModel);
@@ -40,7 +39,7 @@ public class EmployeeService {
     }
 
 
-    public List<EmployeeDTO> getAllEmployee() {
+    public List<EmployeeDTO> getAllEmployees() {
         Iterable<EmployeeModel> employees = employeeModelRepository.findAll();
         List<EmployeeDTO> employeeDTOS = new ArrayList<>();
 
@@ -64,25 +63,22 @@ public class EmployeeService {
         employeeModel.ifPresent(employeeModelRepository::delete);
     }
 
-    public List<EmployeeDTO> findEmployeeByFio(String fio) {
-        Iterable<EmployeeModel> employeeModels = fio != null ?
-                employeeModelRepository.findEmployeeModelByFio(fio) :
-                employeeModelRepository.findAll();
+    public EmployeeDTO findEmployeeByFio(String fio) {
+        return employeeDTOMapper.mapToDTO(employeeModelRepository.findByFio(fio));
+    }
 
-        return transfer(employeeModels);
+    public EmployeeDTO findEmployeeByEmail(String email) {
+        return employeeDTOMapper.mapToDTO(employeeModelRepository.findByEmail(email));
     }
 
     public List<EmployeeDTO> findEmployeeByPosition(String position) {
         Iterable<EmployeeModel> employeeModels = position != null ?
-                employeeModelRepository.findEmployeeModelByPosition(position) :
+                employeeModelRepository.findByPosition(position) :
                 employeeModelRepository.findAll();
 
-        return transfer(employeeModels);
-    }
-
-    private List<EmployeeDTO> transfer(Iterable<EmployeeModel> employeeModels) {
         List<EmployeeDTO> employeeDTOS = new ArrayList<>();
         employeeModels.forEach(employeeModel -> employeeDTOS.add(employeeDTOMapper.mapToDTO(employeeModel)));
         return employeeDTOS;
     }
+
 }

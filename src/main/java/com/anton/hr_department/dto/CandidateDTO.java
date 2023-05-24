@@ -7,7 +7,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 import lombok.experimental.Accessors;
 
-import java.sql.Date;
+import java.time.LocalDate;
 
 @Data
 @NoArgsConstructor
@@ -16,8 +16,8 @@ public class CandidateDTO {
     private Long idCandidate;
     private String fio;
     private String email;
-    private Date dateOfSubmission;
-    private boolean applicationStatus = false;
+    private LocalDate dateOfSubmission;
+    private boolean applicationStatus;
     private String foreignLanguage;
     private VacancyModel vacancy;
     private EducationModel education;

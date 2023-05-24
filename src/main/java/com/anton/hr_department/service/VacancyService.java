@@ -20,7 +20,7 @@ public class VacancyService {
     private final VacancyModelRepository vacancyModelRepository;
     private final RequirementsModelRepository requirementsModelRepository;
 
-    public List<VacancyModel> getAllVacancy() {
+    public List<VacancyModel> getAllVacancys() {
         return vacancyModelRepository.findAll();
     }
 
