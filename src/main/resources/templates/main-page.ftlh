@@ -1,5 +1,4 @@
 <#import "blocks/template.ftlh" as t>
-<#import "blocks/navbar.ftlh" as nav>
 
 <@t.template>
     <nav class="navbar navbar-expand-lg bg-body-secondary" style="margin-bottom: 20px">
@@ -16,7 +15,6 @@
                     <span class="navbar-text" style="padding-right:5px">
                         ${user.login}
                     </span>
-                    <input type="hidden" name="_csrf" value="${_csrf.token}">
                     <input class="btn btn-light my-2 my-sm-0 " type="submit" value="Выйти">
                 </form>
             <#else>

@@ -29,7 +29,6 @@
                                            name="password" required/>
                                     <label class="form-label">Пароль</label>
                                 </div>
-                                <input type="hidden" name="_csrf" value="${_csrf.token}">
                                 <button class="btn btn-outline-light btn-lg px-5" type="submit">Зарегистрироваться
                                 </button>
                             </div>
@@ -53,7 +52,6 @@
         Электронная почта <input type="email" required name="email"><br><br>
         Логин: <input type="text" required name="login"><br><br>
         Пароль: <input type="password" required name="password"><br><br>
-        <input type="hidden" name="_csrf" value="${_csrf.token}">
         <input type="submit" value="Зарегистрироваться"/>
 
     </form>-->

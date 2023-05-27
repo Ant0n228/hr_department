@@ -23,7 +23,6 @@
                                            name="password" required/>
                                     <label class="form-label">Пароль</label>
                                 </div>
-                                <input type="hidden" name="_csrf" value="${_csrf.token}">
                                 <button class="btn btn-outline-light btn-lg px-5" type="submit">Вход</button>
                             </div>
 

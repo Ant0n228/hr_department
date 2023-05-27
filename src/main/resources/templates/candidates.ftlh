@@ -39,7 +39,6 @@
                     <span class="navbar-text" style="padding-right:5px">
                         ${user.login}
                     </span>
-                    <input type="hidden" name="_csrf" value="${_csrf.token}">
                     <input class="btn btn-light my-2 my-sm-0 " type="submit" value="Выйти">
                 </form>
             <#else>

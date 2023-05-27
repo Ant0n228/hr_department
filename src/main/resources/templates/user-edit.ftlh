@@ -12,13 +12,11 @@
     <h4>Для изменения пароля подтвердите текущий пароль</h4>
     Старый пароль: <input type="password" name="oldPassword"/><br><br>
     Новый пароль: <input type="password" name="password"/><br><br>
-    <input type="hidden" name="_csrf" value="${_csrf.token}">
     <input type="submit" value="Изменить информацию"/>
 </form>
 <form action="/user/delete/${user.id}" method="post" enctype="multipart/form-data">
     <h4>Для удаления аккаунта подтвердите пароль</h4>
     Пароль: <input type="password" name="password"/><br><br>
-    <input type="hidden" name="_csrf" value="${_csrf.token}">
     <input type="submit" value="Удалить"/>
 </form>
 </body>

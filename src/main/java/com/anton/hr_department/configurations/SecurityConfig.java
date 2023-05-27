@@ -14,19 +14,19 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
 
 
-
-
 @EnableWebSecurity
 @RequiredArgsConstructor
 @Configuration
-@EnableGlobalMethodSecurity(prePostEnabled = true)
-public class SecurityConfig{
+@EnableGlobalMethodSecurity(
+        prePostEnabled = true)
+public class SecurityConfig {
     private final CustomUserDetailsService userDetailsService;
+
     @Bean
     public SecurityFilterChain configure(HttpSecurity http) throws Exception {
-        http
+        http.csrf().disable()
                 .authorizeRequests()
-                .requestMatchers("/","/registration/**", "/candidate/**", "/department/**", "/employee/**", "/user/**", "/vacancy/**")
+                .requestMatchers("/", "/registration", "/login")
                 .permitAll()
                 .anyRequest().fullyAuthenticated()
                 .and()
@@ -45,7 +45,7 @@ public class SecurityConfig{
         return http.build();
     }
 
-    public AuthenticationManager authenticationManager(AuthenticationManagerBuilder auth ) throws Exception {
+    public AuthenticationManager authenticationManager(AuthenticationManagerBuilder auth) throws Exception {
         return auth
                 .userDetailsService(userDetailsService)
                 .passwordEncoder(passwordEncoder())
@@ -54,7 +54,7 @@ public class SecurityConfig{
     }
 
     @Bean
-    public PasswordEncoder passwordEncoder(){
+    public PasswordEncoder passwordEncoder() {
         return new BCryptPasswordEncoder(8);
     }
 

@@ -40,7 +40,6 @@
                     <span class="navbar-text" style="padding-right:5px">
                         ${user.login}
                     </span>
-                    <input type="hidden" name="_csrf" value="${_csrf.token}">
                     <input class="btn btn-light my-2 my-sm-0 " type="submit" value="Выйти">
                 </form>
             <#else>
@@ -59,11 +58,7 @@
     <div class="container">
         <h2 style="text-align: center; margin-bottom:20px">Поиск сотрудника</h2>
         <form class="row g-3 align-items-center" action="/employee/search" method="get" style="margin-bottom: 20px">
-            <div class="col-4">
-                <input type="text" name="position" class="form-control" placeholder="Должность">
-            </div>
-
-            <div class="col-6">
+            <div class="col-10">
                 <input type="text" name="fio" class="form-control" placeholder="Фио">
             </div>
 

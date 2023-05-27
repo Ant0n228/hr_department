@@ -30,6 +30,7 @@ public class EmployeeController {
         model.addAttribute("user", appController.getUser());
         return "employees";
     }
+
     @GetMapping("/view/{id}")
     public String getEmployee(@PathVariable long id, Model model) {
         model.addAttribute("employee", employeeService.getEmployee(id));
@@ -37,31 +38,15 @@ public class EmployeeController {
         return "employee-info";
     }
 
-    @GetMapping("/search/fio")
+    @GetMapping("/search")
     public String  searchEmployeeByFio(@RequestParam(name = "fio", required = false)
                                        String fio, Model model){
-        model.addAttribute("position", employeeService.findEmployeeByFio(fio));
-        model.addAttribute("user", appController.getUser());
-        return "employees";
-    }
-
-    @GetMapping("/search/position")
-    public String searchEmployeeByPosition(@RequestParam(name="position", required = false)
-                                           String position, Model model) {
-        model.addAttribute("employees", employeeService.findEmployeeByPosition(position));
-        model.addAttribute("user", appController.getUser());
-        return "employees";
-    }
-
-    @GetMapping("/search")
-    public String searchEmployee(@RequestParam(name = "position", required = false) String position,
-                                 @RequestParam(name = "fio", required = false) String fio,
-                                 Model model) {
-        model.addAttribute("employees", employeeService.findEmployeeByPosition(position));
         model.addAttribute("employees", employeeService.findEmployeeByFio(fio));
         model.addAttribute("user", appController.getUser());
         return "employees";
     }
+
+
     @PostMapping("/delete/{id}")
     @PreAuthorize("hasAnyAuthority('ROLE_CHIEF', 'ROLE_HR_SPECIALIST', 'ROLE_DEPARTMENT_ENGINEER')")
     public String deleteEmployee(@PathVariable long id) {

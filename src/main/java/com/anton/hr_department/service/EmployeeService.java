@@ -63,8 +63,13 @@ public class EmployeeService {
         employeeModel.ifPresent(employeeModelRepository::delete);
     }
 
-    public EmployeeDTO findEmployeeByFio(String fio) {
-        return employeeDTOMapper.mapToDTO(employeeModelRepository.findByFio(fio));
+    public List<EmployeeDTO> findEmployeeByFio(String fio) {
+        Iterable<EmployeeModel> employeeModels = fio != null ?
+                employeeModelRepository.findByFio(fio) :
+                employeeModelRepository.findAll();
+        List<EmployeeDTO> employeeDTOS = new ArrayList<>();
+        employeeModels.forEach(employeeModel -> employeeDTOS.add(employeeDTOMapper.mapToDTO(employeeModel)));
+        return employeeDTOS;
     }
 
     public EmployeeDTO findEmployeeByEmail(String email) {
